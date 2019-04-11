@@ -23,6 +23,6 @@ Route::get('/bootstrap', function () {
     return view('bootstrap');
 });
 
-Route::get('/bootstrapgrid', function () {
-    return view('bootstrapgrid');
+Route::get('/bootstrapgrids', function () {
+    return view('bootstrapgrids');
 });
