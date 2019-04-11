@@ -18,3 +18,11 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('login');
 });
+
+Route::get('/bootstrap', function () {
+    return view('bootstrap');
+});
+
+Route::get('/bootstrapgrid', function () {
+    return view('bootstrapgrid');
+});
