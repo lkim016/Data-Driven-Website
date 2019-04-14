@@ -1,6 +1,6 @@
 # spring_2019_team1
 
-
+To start server locally
 Instructions:
 
 1. Navigate to /src
