@@ -28,7 +28,8 @@
                 <label for="pw">Password: </label>
                 <input type="text" class="form-control" id="pw" placeholder="Enter Password" name="pw" required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button><br/><br/>
+            <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+            <a href="/main" class="btn btn-primary">Submit</a><br/><br/>
             <label>
                 <input type="checkbox" checked="checked" name="remember">Remember me
             </label><br/>
