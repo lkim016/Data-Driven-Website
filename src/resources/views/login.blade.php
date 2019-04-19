@@ -28,7 +28,7 @@
                 <label for="pw">Password: </label>
                 <input type="text" class="form-control" id="pw" placeholder="Enter Password" name="pw" required>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button><br/>
+            <button type="submit" class="btn btn-primary">Submit</button><br/><br/>
             <label>
                 <input type="checkbox" checked="checked" name="remember">Remember me
             </label><br/>

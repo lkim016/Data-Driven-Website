@@ -10,18 +10,10 @@
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ul class="nav navbar-nav">
-            <li class="active">
-                <a class="nav-link" href="#">Add Available Resource</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Add Emergency Incident</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Search Resources</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Generate Resource Report</a>
-            </li>
+            <li class="active"><a class="nav-link" href="#1">Add Available Resource</a></li>
+            <li class="nav-item"><a class="nav-link" href="#2">Add Emergency Incident</a></li>
+            <li class="nav-item"><a class="nav-link" href="#3">Search Resources</a></li>
+            <li class="nav-item"><a class="nav-link" href="#4">Generate Resource Report</a></li>
         </ul>
     </nav>
 
@@ -40,22 +32,14 @@
     <div class="main-menu">
         <ul>
             <h3>Main Menu</h3>
-            <li>
-                <a class="nav-link" href="#">Add Available Resource</a>
-            </li>
-            <li>
-                <a class="nav-link" href="#">Add Emergency Incident</a>
-            </li>
-            <li>
-                <a class="nav-link" href="#">Search Resources</a>
-            </li>
-            <li>
-                <a class="nav-link" href="#">Generate Resource Report</a>
-            </li>
+            <li><a class="nav-link" href="#">Add Available Resource</a></li>
+            <li><a class="nav-link" href="#">Add Emergency Incident</a></li>
+            <li><a class="nav-link" href="#">Search Resources</a></li>
+            <li><a class="nav-link" href="#">Generate Resource Report</a></li>
         </ul>
     </div>
 
     <span class="exit"></span>
-    <a href="login.blade.php"><button type="button" class="btn btn-secondary">Exit</button></a>
+    <a href="/login"><button type="button" class="btn btn-secondary">Exit</button></a>
 </body>
 </html>
