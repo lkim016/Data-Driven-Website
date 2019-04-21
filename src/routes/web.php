@@ -21,23 +21,23 @@ Route::get('/main', function () {
     return view('main');
 });
 
-Route::get('/register', function() {
-    return view('register');
-});
+// Route::get('/register', function() {
+//     return view('register');
+// });
 
-Route::post('/user/register', array('uses'=>'UserRegistration@postRegister'));
+Route::get('view-users', 'UserController@view');
 
-Route::get('insert', 'UserInsertController@insertform');
-Route::post('create','UserInsertController@insert');
+Route::get('register', 'UserController@insertform');
+Route::post('user_create', 'UserController@insert');
 
-Route::get('view-records', 'UserViewController@index');
+Route::post('/user/register', array('uses'=>'UserController@postRegister'));
 
-Route::get('edit-records', 'UserUpdateController@index');
-Route::get('edit/{id}', 'UserUpdateController@show');
-Route::post('edit/{id}', 'UserUpdateController@edit');
 
-Route::get('delete-records','UserDeleteController@index');
-Route::get('delete/{id}', 'UserDeleteController@destroy');
+Route::get('edit/{id}', 'UserController@show');
+Route::post('edit/{id}', 'UserController@edit');
+Route::get('delete/{id}', 'UserController@destroy');
+
+
 
 Route::get('sendbasicemail', 'MailController@basic_email');
 Route::get('sendhtmlemail', 'MailController@html_email');

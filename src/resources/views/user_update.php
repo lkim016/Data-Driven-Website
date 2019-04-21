@@ -12,12 +12,14 @@
                 <tr>
                     <td>Name</td>
                     <td>
-                        <input type='text' name='username' value='<?php echo $users[0]->name; ?>'/>
+                        <input type='text' name='username' value='<?php echo $users[0]->username; ?>'/>
+                        <input type='text' name='passwd' value='<?php echo $users[0]->passwd; ?>'/>
+                        <input type='text' name='email' value='<?php echo $users[0]->email; ?>'/>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan='2'>
-                        <input type='submit' value='Update Student'/>
+                    <td colspan="2">
+                        <input type="submit" value="Update user"/>
                     </td>
                 </tr>
             </table>
