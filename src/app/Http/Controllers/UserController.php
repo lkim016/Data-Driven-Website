@@ -58,6 +58,20 @@ class UserController extends Controller
         echo "Record updated successfully.<br/>";
         echo '<a href="/view-users">Click Here</a> to go back.';
     }
+    public function validate(Request $request, $id)
+    {
+        $username = $request->input('username');
+        $passwd = $request->input('passwd');
+        $email = $request->input('email');
+        $actual_passwd = DB::select('select passwd from users where id = ?',[$id]);
+        
+        if ($passwd = $actual_passwd){
+            return view('main');
+        }
+        else {
+            echo "Incorrect password attempt. Try again";
+        }
+    }
     public function destroy($id)
     {
         DB::delete('delete from users where id = ?',[$id]);

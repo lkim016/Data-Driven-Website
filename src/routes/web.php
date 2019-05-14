@@ -42,3 +42,16 @@ Route::get('delete/{id}', 'UserController@destroy');
 Route::get('sendbasicemail', 'MailController@basic_email');
 Route::get('sendhtmlemail', 'MailController@html_email');
 Route::get('sendattachmentemail', 'MailController@attachment_email');
+
+Route::get('register2', function() {
+    return view('register2');
+});
+// Route::post('register2', function () {
+//     return;
+// });
+// Route::post('/create_user', 'UserController@insert');
+
+
+Route::get('login2', function() {
+    return view('login2');
+});

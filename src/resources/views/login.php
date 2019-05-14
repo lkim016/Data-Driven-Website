@@ -33,7 +33,8 @@
             <label>
                 <input type="checkbox" checked="checked" name="remember">Remember me
             </label><br/>
-            <span class="pw">Forgot <a href="#">password?</a></span>
+            <p><span class="pw">Forgot <a href="#">password?</a></span></p>
+            <p><span class="reg">Click here to <a href="/register">register.</a></span></p>
         </div>
     </form>
 </div>
