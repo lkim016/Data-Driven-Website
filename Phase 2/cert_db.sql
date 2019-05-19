@@ -197,7 +197,7 @@ ALTER TABLE `category`
 ALTER TABLE `incident`
   ADD PRIMARY KEY(`incident_id`),
   ADD KEY `user.username-incident.username_fk` (`username`),
-  ADD KEY `category.category_id-incident.primary_function_id_fk` (`primary_function_id`),
+  ADD KEY `category.category_id-incident.primary_function_id_fk` (`primary_function_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
