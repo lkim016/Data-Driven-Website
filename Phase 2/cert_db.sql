@@ -189,7 +189,7 @@ ALTER TABLE `user`
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`cateogry_id`);
+  ADD PRIMARY KEY (`category_id`);
 
 --
 -- Indexes for table `incident`
