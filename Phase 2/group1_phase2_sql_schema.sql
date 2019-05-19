@@ -50,6 +50,20 @@ CREATE TABLE cert_member (
   UNIQUE KEY phone_number (phone_number)
 );
 
+CREATE TABLE resource_provider (
+  provider_id int(15) unsigned NOT NULL AUTO_INCREMENT,
+  username varchar(100) NOT NULL,
+  street_number int(4) NOT NULL,
+  street varchar(30) NOT NULL,
+  apt_number varchar(4) DEFAULT NULL,
+  city varchar(30) NOT NULL,
+  state varchar(2) NOT NULL,
+  zip int(5) NOT NULL,
+  PRIMARY KEY (provider_id),
+  UNIQUE KEY (username),
+  KEY street (street_number, street, apt_number, city, state, zip) -- input the composit key into 'street'
+);
+
 
 
 CREATE TABLE cost_unit (
@@ -88,20 +102,6 @@ CREATE TABLE resource (
   KEY primary_function_id (primary_function_id),
   KEY username (username),
   KEY unit_id (unit_id)
-);
-
-
-
-CREATE TABLE resource_provider (
-  username varchar(100) NOT NULL,
-  street_number int(4) NOT NULL,
-  street varchar(30) NOT NULL,
-  apt_number varchar(4) DEFAULT NULL,
-  city varchar(30) NOT NULL,
-  state varchar(2) NOT NULL,
-  zip int(5) NOT NULL,
-  PRIMARY KEY (username),
-  KEY street (street_number, street, apt_number, city, state, zip) -- input the composit key into 'street'
 );
 
 
