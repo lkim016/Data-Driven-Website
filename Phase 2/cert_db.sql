@@ -112,6 +112,29 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `category_id` int(15) NOT NULL,
+  `type` varchar(500) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `incident`
+--
+
+CREATE TABLE `incident` (
+  `username` varchar(100) NOT NULL,
+  `category_id` int(15) NOT NULL,
+  `incident_id` int(15) NOT NULL,
+  `date` datetime NOT NULL,
+  `description` varchar(500) NOT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Indexes for dumped tables
 --
 
@@ -161,6 +184,20 @@ ALTER TABLE `resource_provider`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`username`);
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`cateogry_id`);
+
+--
+-- Indexes for table `incident`
+--
+ALTER TABLE `incident`
+  ADD PRIMARY KEY(`incident_id`),
+  ADD KEY `user.username-incident.username_fk` (`username`),
+  ADD KEY `category.category_id-incident.primary_function_id_fk` (`primary_function_id`),
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -213,6 +250,13 @@ ALTER TABLE `resource`
 --
 ALTER TABLE `resource_provider`
   ADD CONSTRAINT `user.username-resource_provider.username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `incident`
+--
+ALTER TABLE `incident`
+  ADD CONSTRAINT `user.username-incident.username_fk` FOREIGN KEY (`username`) REFERENCES `user` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `category.category_id-incident.primary_function_id_fk` FOREIGN KEY (`primary_function_id`) REFERENCES `function` (`function_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
