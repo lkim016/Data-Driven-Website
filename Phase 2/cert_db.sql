@@ -131,7 +131,7 @@ CREATE TABLE `incident` (
   `category_id` int(15) NOT NULL,
   `incident_id` int(15) NOT NULL,
   `date` datetime NOT NULL,
-  `description` varchar(500) NOT NULL,
+  `description` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
