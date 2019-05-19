@@ -8,11 +8,11 @@ CREATE DATABASE IF NOT EXISTS cis197_group1_cert_db
 USE cis197_group1_cert_db;
 
 CREATE USER IF NOT EXISTS 'admin1'@'localhost';
-SET PASSWORD FOR 'admin1'@'localhost' = 'admin1';
+SET PASSWORD FOR 'admin1'@'localhost' = '';
 GRANT ALL PRIVILEGES ON `admin1`.* TO 'admin1'@'localhost' WITH GRANT OPTION;
 
 CREATE USER IF NOT EXISTS 'admin1'@'%';
-SET PASSWORD FOR 'admin1'@'%' = 'admin1';
+SET PASSWORD FOR 'admin1'@'%' = '';
 GRANT ALL PRIVILEGES ON `admin1`.* TO 'admin1'@'%' WITH GRANT OPTION;
 
 GRANT ALL PRIVILEGES ON `cis197_group1_cert_db`.* TO 'admin1'@'localhost';
@@ -41,7 +41,7 @@ CREATE TABLE cert_member (
 
 
 CREATE TABLE cost_unit (
-  unit_id int(15) NOT NULL AUTO_INCREMENT,
+  unit_id int(15) unsigned NOT NULL AUTO_INCREMENT,
   unit varchar(250) NOT NULL,
   PRIMARY KEY (unit_id)
 );
@@ -49,29 +49,29 @@ CREATE TABLE cost_unit (
 
 
 CREATE TABLE `function` (
-  function_id int(15) NOT NULL AUTO_INCREMENT,
+  function_id int(15) unsigned NOT NULL AUTO_INCREMENT,
   description varchar(500) NOT NULL,
   PRIMARY KEY (function_id)
 );
 
 
 CREATE TABLE secondary_function (
-  resource_id int(15) NULL,
-  function_id int(15) NULL,
+  resource_id int(15) unsigned NULL,
+  function_id int(15) unsigned NULL,
   KEY (resource_id, function_id)
 );
 
 
 CREATE TABLE resource (
-  resource_id int(15) NOT NULL AUTO_INCREMENT,
+  resource_id int(15) unsigned NOT NULL AUTO_INCREMENT,
   username varchar(100) NOT NULL,
-  primary_function_id int(15) NOT NULL,
+  primary_function_id int(15) unsigned NOT NULL,
   resource_name varchar(500) NOT NULL,
   description varchar(500) DEFAULT NULL,
   capabilities varchar(1000) DEFAULT NULL,
   distance decimal(4,1) DEFAULT NULL,
   cost decimal(5,2) NOT NULL,
-  unit_id int(15) NOT NULL,
+  unit_id int(15) unsigned NOT NULL,
   PRIMARY KEY (resource_id),
   KEY primary_function_id (primary_function_id),
   KEY username (username),
@@ -104,7 +104,7 @@ CREATE TABLE user (
 
 
 CREATE TABLE category (
-  category_id int(15) NOT NULL AUTO_INCREMENT,
+  category_id int(15) unsigned NOT NULL AUTO_INCREMENT,
   type varchar(500) NOT NULL,
   PRIMARY KEY (category_id)
 );
@@ -113,8 +113,8 @@ CREATE TABLE category (
 
 CREATE TABLE incident (
   username varchar(100) NOT NULL,
-  category_id int(15) NOT NULL,
-  incident_id int(15) NOT NULL,
+  category_id int(15) unsigned NOT NULL,
+  incident_id int(15) unsigned NOT NULL,
   date datetime NOT NULL,
   description varchar(500) NOT NULL,
   PRIMARY KEY(incident_id),
