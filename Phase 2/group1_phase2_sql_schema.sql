@@ -8,11 +8,11 @@ CREATE DATABASE IF NOT EXISTS cis197_group1_cert_db
 USE cis197_group1_cert_db;
 
 CREATE USER IF NOT EXISTS 'admin1'@'localhost';
-SET PASSWORD FOR 'admin1'@'localhost' = admin1;
+SET PASSWORD FOR 'admin1'@'localhost' = 'admin1';
 GRANT ALL PRIVILEGES ON `admin1`.* TO 'admin1'@'localhost' WITH GRANT OPTION;
 
 CREATE USER IF NOT EXISTS 'admin1'@'%';
-SET PASSWORD FOR 'admin1'@'%' = admin1;
+SET PASSWORD FOR 'admin1'@'%' = 'admin1';
 GRANT ALL PRIVILEGES ON `admin1`.* TO 'admin1'@'%' WITH GRANT OPTION;
 
 GRANT ALL PRIVILEGES ON `cis197_group1_cert_db`.* TO 'admin1'@'localhost';
@@ -21,20 +21,32 @@ FLUSH PRIVILEGES;
 
 
 -- Tables
+CREATE TABLE user (
+  user_id int(15) unsigned NOT NULL AUTO_INCREMENT,
+  username varchar(100) NOT NULL,
+  disp_name varchar(100) NOT NULL,
+  password varchar(500) NOT NULL,
+  PRIMARY KEY (user_id),
+  UNIQUE KEY (username)
+);
 
 CREATE TABLE `admin` (
+  admin_id int(15) unsigned NOT NULL AUTO_INCREMENT,
   username varchar(100) NOT NULL,
   email varchar(100) NOT NULL,
-  PRIMARY KEY (username),
+  PRIMARY KEY (admin_id),
+  UNIQUE KEY (username),
   UNIQUE KEY email (email)
 );
 
 
 
 CREATE TABLE cert_member (
+  member_id int(15) unsigned NOT NULL AUTO_INCREMENT,
   username varchar(100) NOT NULL,
   phone_number int(10) NOT NULL,
-  PRIMARY KEY (username),
+  PRIMARY KEY (member_id),
+  UNIQUE KEY (username),
   UNIQUE KEY phone_number (phone_number)
 );
 
@@ -90,15 +102,6 @@ CREATE TABLE resource_provider (
   zip int(5) NOT NULL,
   PRIMARY KEY (username),
   KEY street (street_number, street, apt_number, city, state, zip) -- input the composit key into 'street'
-);
-
-
-
-CREATE TABLE user (
-  username varchar(100) NOT NULL,
-  disp_name varchar(100) NOT NULL,
-  password varchar(500) NOT NULL,
-  PRIMARY KEY (username)
 );
 
 
