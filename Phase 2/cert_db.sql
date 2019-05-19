@@ -96,7 +96,8 @@ CREATE TABLE `resource_provider` (
   `street` varchar(30) NOT NULL,
   `apt_number` varchar(4) DEFAULT NULL,
   `city` varchar(30) NOT NULL,
-  `state` varchar(2) NOT NULL
+  `state` varchar(2) NOT NULL,
+  `zip` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
