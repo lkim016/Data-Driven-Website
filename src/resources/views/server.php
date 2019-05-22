@@ -2,13 +2,13 @@
 session_start();
 
 // variable declarations
-$username = "";
+$username = ""; # need to put login information here
 $email = "";
 $errors = array();
 $_SESSION['success'] = "";
 
 // connect to the database
-$db = mysqli_connect('localhost', 'debian-sys-maint', '2gQXjTEAtEtWu64F', 'cis197');
+$db = mysqli_connect('localhost', 'admin1', '', 'cis197_group1_cert_db'); // LK: need to change database access info.
 
 // REGISTER USER
 if (isset($_POST['reg_user'])) {
@@ -69,7 +69,7 @@ if (isset($_POST['reg_user'])) {
 
     if (count($errors) == 0) {
         $password = md5($password);
-        $query = "select * from users where username='$username' AND passwd='$password'";
+        $query = "select * from users where username='$username' AND password='$password'";
         $results = mysqli_query($db, $query);
         if (mysqli_num_rows($results) == 1) {
             $_SESSION['username'] = $username;
@@ -81,5 +81,6 @@ if (isset($_POST['reg_user'])) {
         }
     }
 }
+
 
 ?>

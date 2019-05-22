@@ -21,6 +21,25 @@ Route::get('/main', function () {
     return view('main');
 });
 
+// added 5/21
+Route::post('/main', 'LoginController@get_login');
+
+Route::get('/add-resource', function () {
+    return view('add-resource');
+});
+
+Route::get('/add-incident', function () {
+    return view('add-incident');
+});
+
+Route::get('/search-resource', function () {
+    return view('search-resource');
+});
+
+Route::get('/resource-report', function () {
+    return view('resource-report');
+});
+
 // Route::get('/register', function() {
 //     return view('register');
 // });

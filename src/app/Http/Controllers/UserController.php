@@ -7,10 +7,8 @@ use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class UserController extends Controller
-{
-    public function postRegister(Request $request) 
-    {
+class UserController extends Controller {
+    public function postRegister(Request $request) {
         //Retrieve the username input field
         $username = $request->input('username');
         echo 'Username: '.$username;
@@ -78,4 +76,5 @@ class UserController extends Controller
         echo "Record deleted successfully.<br/>";
         echo '<a href="/view-users">Click Here</a> to go back.';
     }
+
 }
