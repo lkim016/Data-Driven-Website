@@ -22,8 +22,9 @@ class LoginController extends Controller
             if ($login_check == 1){ // what is the counter(username) = 1: does this also account for double input of the user? The db anyway has a uk constraint on username
                 echo $login_disp_name;
                 return view('/main', compact('login_disp_name'));
-            //} else {
-            //    return view('/login');
+            } else {
+                // error messages
+                return view('/login');
             }
         }
 
