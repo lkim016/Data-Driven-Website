@@ -8,11 +8,11 @@ CREATE DATABASE IF NOT EXISTS cis197_group1_cert_db
 USE cis197_group1_cert_db;
 
 CREATE USER IF NOT EXISTS 'admin1'@'localhost';
-SET PASSWORD FOR 'admin1'@'localhost' = 'admin1';
+SET PASSWORD FOR 'admin1'@'localhost' = '';
 GRANT ALL PRIVILEGES ON `admin1`.* TO 'admin1'@'localhost' WITH GRANT OPTION;
 
 CREATE USER IF NOT EXISTS 'admin1'@'%';
-SET PASSWORD FOR 'admin1'@'%' = 'admin1';
+SET PASSWORD FOR 'admin1'@'%' = '';
 GRANT ALL PRIVILEGES ON `admin1`.* TO 'admin1'@'%' WITH GRANT OPTION;
 
 GRANT ALL PRIVILEGES ON `cis197_group1_cert_db`.* TO 'admin1'@'localhost';

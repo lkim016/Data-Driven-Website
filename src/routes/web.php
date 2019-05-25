@@ -22,7 +22,7 @@ Route::get('/main', function () {
 });
 
 // added 5/21
-Route::post('/main', 'LoginController@get_login');
+Route::post('/main', 'LoginController@val_login');
 
 Route::get('/add-resource', function () {
     return view('add-resource');
