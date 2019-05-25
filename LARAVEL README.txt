@@ -18,3 +18,5 @@ https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-man
 https://teamtreehouse.com/community/git-commit-a-m-new-message-commits-all-changes-so-what-happens-when-i-just-type-git-commit-m-new-message
 
 https://www.git-tower.com/learn/git/faq/checkout-remote-branch
+
+https://stackoverflow.com/questions/6577695/how-do-i-move-the-contents-of-my-master-branch-to-a-new-git-branch
