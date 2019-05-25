@@ -22,7 +22,7 @@
             <h2>{{$login_disp_name}}</h2> <!-- pick up here -->
         </div>
         <div class="col-sm right">
-            <h5>[ USERNAME ]</h5>
+            <h5>{{$login_user}}</h5>
             <h5>[ USER SPECIFIC INFO ]</h5>
         </div>
     </div>
