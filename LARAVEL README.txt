@@ -16,3 +16,5 @@ GITHUB:
 https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches
 
 https://teamtreehouse.com/community/git-commit-a-m-new-message-commits-all-changes-so-what-happens-when-i-just-type-git-commit-m-new-message
+
+https://www.git-tower.com/learn/git/faq/checkout-remote-branch
