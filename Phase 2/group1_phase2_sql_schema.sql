@@ -44,7 +44,7 @@ CREATE TABLE `admin` (
 CREATE TABLE cert_member (
   member_id int(15) unsigned NOT NULL AUTO_INCREMENT,
   username varchar(100) NOT NULL,
-  phone_number int(10) NOT NULL,
+  phone_number varchar(10) NOT NULL,
   PRIMARY KEY (member_id),
   UNIQUE KEY (username),
   UNIQUE KEY phone_number (phone_number)

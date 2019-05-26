@@ -18,7 +18,7 @@ Route::get('/login', function () {
 });
 
 Route::get('/main', function () {
-    return view('main');
+    return view('index');
 });
 
 // added 5/21

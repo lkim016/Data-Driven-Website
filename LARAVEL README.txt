@@ -7,6 +7,10 @@ resources -> views -> server.php
 
 LARAVEL Ref:
 https://www.cloudways.com/blog/models-views-laravel/
+controller->view
+https://www.easylaravelbook.com/blog/laravel-passing-variables-from-the-controller-to-view/
+templates
+https://vegibit.com/creating-a-layouts-template-in-laravel/
 
 LARAVEL W MYSQL:
 https://lavalite.org/blog/connecting-your-laravel-project-to-mysql-database
