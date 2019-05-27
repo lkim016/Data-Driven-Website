@@ -38,9 +38,5 @@
     @yield('content')
     </div>
 
-    <hr>
-
-    <span class="exit"></span>
-    <a href="/login"><button type="button" class="btn btn-secondary">Exit</button></a>
 </body>
 </html>

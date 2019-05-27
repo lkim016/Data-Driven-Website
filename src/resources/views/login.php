@@ -40,9 +40,8 @@
             </label><br/>
             <p><span class="pw">Forgot <a href="#">password?</a></span></p>
             <p><span class="reg">Click here to <a href="/register">register.</a></span></p>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
 </body>
 </html>

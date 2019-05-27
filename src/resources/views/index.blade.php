@@ -9,4 +9,10 @@
             <li><a class="nav-link" href="/resource-report">Generate Resource Report</a></li>
         </ul>
     </div>
+    
+    <hr>
+    <footer>
+        <span class="exit"></span>
+        <a href="/login"><button type="button" class="btn btn-secondary">Exit</button></a>
+    </footer>
 @endsection
