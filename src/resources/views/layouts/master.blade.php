@@ -3,19 +3,20 @@
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="css/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <title>Main</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!--<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ul class="nav navbar-nav">
             <li class="active"><a class="nav-link" href="/add-resource">Add Available Resource</a></li>
             <li class="nav-item"><a class="nav-link" href="/add-incident">Add Emergency Incident</a></li>
             <li class="nav-item"><a class="nav-link" href="/search-resource">Search Resources</a></li>
             <li class="nav-item"><a class="nav-link" href="/resource-report">Generate Resource Report</a></li>
         </ul>
-    </nav>
+    </nav>-->
 
     <div class="row">
         <div class="col-sm left">

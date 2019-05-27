@@ -20,7 +20,9 @@
         <tr>
             <td><label for="prim_func">Primary Function: </label></td>
             <td><select class="form-control" id="sel1" required>
-                    <option value = ""> 1 </option>
+                @foreach( $primary_function as $function )
+                    <option> {{$function->function_id}}. {{$function->description}} </option> <!-- html design -->
+                @endforeach
                 </select></td>
         </tr>
         <tr>
@@ -62,5 +64,14 @@
     </footer>
         </form>
 </div>
+
+<script>
+    $(document).focus(
+        function() {
+            console.log( $("#sel1").val() );
+        }
+    );
+
+</script>
 
 @endsection
