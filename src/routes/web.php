@@ -24,7 +24,8 @@ Route::get('/main', function () {
 // added 5/21
 Route::post('/main', 'MainController@val_login');
 
-Route::get('/add-resource', 'MainController@add_resource_load');
+Route::get('/add-resource', 'MainController@resource_load');
+Route::post('/add-resource', 'MainController@resource_save');
 
 Route::get('/add-incident', function () {
     return view('add-incident');
@@ -41,9 +42,6 @@ Route::get('/resource-report', function () {
 // Route::get('/register', function() {
 //     return view('register');
 // });
-
-
-
 
 
 

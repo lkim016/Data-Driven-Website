@@ -95,7 +95,7 @@ CREATE TABLE resource (
   resource_name varchar(500) NOT NULL,
   description varchar(500) DEFAULT NULL,
   capabilities varchar(1000) DEFAULT NULL,
-  distance decimal(4,1) DEFAULT NULL,
+  distance decimal(4,1) DEFAULT 0.0,
   cost decimal(5,2) NOT NULL,
   unit_id int(15) unsigned NOT NULL,
   PRIMARY KEY (resource_id),
