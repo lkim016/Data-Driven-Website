@@ -50,13 +50,13 @@ class MainController extends Controller
 
         // query the db to get the cost_unit
         $cost_unit = DB::select('select unit_id, unit from cost_unit');
-        return view('add-resource', compact('primary_function', 'js_func', 'cost_unit'));
+        return view('/add-resource', compact('primary_function', 'js_func', 'cost_unit'));
     }
 
     public function resource_save(Request $request)
     {
+        // resource id generates after data has been validated and saves
         // get data from html input and run html inputs through htmlspecialchars()
-        
         $user = htmlspecialchars($request->session()->get('user'));
         $res_name = htmlspecialchars($request->input('resource_name'));
         $primary_func = htmlspecialchars($request->input('prim_func'));
@@ -75,9 +75,9 @@ class MainController extends Controller
         // loop secondary function through htmlspecialchars()
         $option = $secondary_func;
         for ($i=0; $i < count($option); $i++) {
-            echo $option[$i];
             $option[$i] = htmlspecialchars($option[$i]);
         }
+        
         // put html data into db
         // db insert statement
         DB::insert('insert into resource
@@ -86,27 +86,20 @@ class MainController extends Controller
         (?, ?, ?, ?, ?, ?, ?, ?);', array($user, $res_name, $primary_func, $desc, $capa, $dist, $cost, $unit)); // resource_id is auto-incremented
         
         // get resource_id from db
-        $resource_id = DB::select('select resource_id as id from resource order by id desc;');
-        // why am I getting 24?
+        $resource_id = DB::select("select max(resource_id) as id from resource;");
         foreach ($resource_id as $last_id) {
-            echo $last_id->id[count($resource_id)];
+            $last_res_id = $last_id->id;
         }
-
+        
         // html input could have mutliple for secondary_func
-        //for ($i=0; $i < count($option); $i++) {
-        //    DB::insert('insert into secondary_function
-        //    (resource_id, function_id)
-        //    VALUES
-        //    (?, ?);', array($resource_id, $option[$i]));
-        //}
-        // resource id generates after data has been validated and saves
-        // saves user in db
-        // saves resource name
-        // saves primary function
-        // saves scondary function (optional)
-        // saves description (optional)
-        // saves capabilites (optional)
-        // saves distance
-        // saves cost
+        for ($i=0; $i < count($option); $i++) {
+            DB::insert('insert into secondary_function
+            (resource_id, function_id)
+            VALUES
+            (?, ?);', array($last_res_id, $option[$i]));
+        }
+        // if data has been successfully entered send message
+        return redirect()->to('/main');
+        // else send error message
     }
 }

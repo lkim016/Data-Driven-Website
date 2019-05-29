@@ -69,7 +69,6 @@
 
 <script type = "text/javascript">
     // PRIMARY AND SECONDARY FUNCTION LOADING JS
-    $(document).ready( function() {
     secondary_func();
     $("#sel1").change( function() { secondary_func() } );
 
@@ -97,8 +96,7 @@
                     $("#sel2").append( $('<option></option>').attr("value", id).text(id + '. ' + desc) );
                 }
             }
-        }
-    });
+    };
 
     // MAKING AN ARRAY THAT STORES ALL OF THE CAPABILITIES
     //$("#add").on("click", function () { // not sure why we chould have an add button here

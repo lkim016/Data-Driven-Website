@@ -3,6 +3,7 @@
 <head>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <style>
 
@@ -31,9 +32,10 @@
             </div>
             <div class="form-group">
                 <label for="pw">Password: </label>
-                <input type="text" class="form-control" id="pw" placeholder="Enter Password" name="password" required>
+                <input type="text" class="form-control" id="pw1" placeholder="Enter Password" name="password1" required>
+                <input type="text" hidden id="pw" name="password"/>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" id="login_submit">Submit</button>
             <!--<a href="/main" class="btn btn-primary">Submit</a><br/><br/> -->
             <label>
                 <input type="checkbox" checked="checked" name="remember">Remember me
@@ -42,6 +44,37 @@
             <p><span class="reg">Click here to <a href="/register">register.</a></span></p>
         </form>
     </div>
+
+    <script type = "text/javascript">
+        var store_inp = '';
+        $("#pw1").on( "keydown", function () {
+            if (event.which == 8) {
+                store_inp = store_inp.substr(0, store_inp.length - 1)
+            } else {
+                store_inp += String.fromCharCode(event.which);
+            }
+            convert_str( $(this) );
+        });
+
+        $("#login_submit").on("click", function () {
+            $("#pw").val ( store_inp );
+        });
+
+        function convert_str (this_obj) {
+            // store user input to pass to db
+            $(this_obj).val( $(this_obj).val().replace( this_obj.val(), rep(this_obj.val()) ) );
+            
+            function rep(val_obj) {
+                var len = val_obj.length
+                var result = '';
+                for (i = 0; i < len; i++) {
+                    result += '*';
+                }
+                return result;
+            }
+        };
+
+    </script>
 
 </body>
 </html>
