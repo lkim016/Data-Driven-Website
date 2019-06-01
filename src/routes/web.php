@@ -21,23 +21,22 @@ Route::get('/main', function () {
     return view('index');
 });
 
-// added 5/21
 Route::post('/main', 'MainController@val_login');
+
+// added 5/21
 
 Route::get('/add-resource', 'MainController@resource_load');
 Route::post('/add-resource', 'MainController@resource_save');
 
-Route::get('/add-incident', function () {
-    return view('add-incident');
-});
+Route::get('/add-incident', 'MainController@incident_load');
+Route::post('/add-incident', 'MainController@incident_save');
 
 Route::get('/search-resource', function () {
     return view('search-resource');
 });
 
-Route::get('/resource-report', function () {
-    return view('resource-report');
-});
+Route::get('/resource-report', 'MainController@show_resource');
+
 
 // Route::get('/register', function() {
 //     return view('register');

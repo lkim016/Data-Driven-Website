@@ -47,13 +47,15 @@
 
     <script type = "text/javascript">
         var store_inp = '';
-        $("#pw1").on( "keydown", function () {
+        // problem: a space is added / solution: need to catch the special keys 
+        $("#pw1").on( "keydown", function () { // change to "keyup"
             if (event.which == 8) {
                 store_inp = store_inp.substr(0, store_inp.length - 1)
             } else {
                 store_inp += String.fromCharCode(event.which);
             }
             convert_str( $(this) );
+            console.log( store_inp );
         });
 
         $("#login_submit").on("click", function () {
@@ -65,9 +67,9 @@
             $(this_obj).val( $(this_obj).val().replace( this_obj.val(), rep(this_obj.val()) ) );
             
             function rep(val_obj) {
-                var len = val_obj.length
+                var len = val_obj.length;
                 var result = '';
-                for (i = 0; i < len; i++) {
+                for (i = 0; i < len ; i++) {
                     result += '*';
                 }
                 return result;

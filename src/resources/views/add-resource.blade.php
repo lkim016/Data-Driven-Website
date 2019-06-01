@@ -2,8 +2,8 @@
 @section('content')
 <div id="id02" class="add_resource">
     <table>
-        <h1>New Resource Information</h1>
-        <form method = "post">
+        <h1>Add Available Resource</h1>
+        <form method = "post" action = "/add-resource">
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
         <tr>
             <td><label for="resource_id">Resource ID:</label></td>
@@ -14,14 +14,14 @@
             <td> {{session('user')}} </td>
         </tr>
         <tr>
-            <td><label for="resource_name">Resource Name: </label></td>
+            <td><label for="resource_name">Resource Name:</label></td>
             <td><input type="text" class="form-control" id="resource_name" placeholder="Enter a Resource Name" name="resource_name" required></td>
         </tr>
         <tr>
-            <td><label for="prim_func">Primary Function: </label></td>
+            <td><label for="prim_func">Primary Function:</label></td>
             <td><select class="form-control" id="sel1" name="prim_func" required>
                 @foreach( $primary_function as $function )
-                    <option value =  {{$function->function_id}}> {{$function->function_id}}. {{$function->description}} </option> <!-- html design -->
+                    <option value =  "{{$function->function_id}}" > {{$function->function_id}}. {{$function->description}} </option> <!-- html design -->
                 @endforeach
                 </select></td>
         </tr>
@@ -64,7 +64,7 @@
         <button type="button" class="btn btn-secondary">Cancel</button>
         <button type="submit" class="btn btn-primary save">Save</button>
     </footer>
-        </form>
+    </form>
 </div>
 
 <script type = "text/javascript">

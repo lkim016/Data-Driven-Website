@@ -107,7 +107,7 @@ CREATE TABLE resource (
 
 
 CREATE TABLE category (
-  category_id int(15) unsigned NOT NULL AUTO_INCREMENT,
+  category_id varchar(15) NOT NULL,
   type varchar(500) NOT NULL,
   PRIMARY KEY (category_id)
 );
@@ -116,8 +116,8 @@ CREATE TABLE category (
 
 CREATE TABLE incident (
   username varchar(100) NOT NULL,
-  category_id int(15) unsigned NOT NULL,
-  incident_id int(15) unsigned NOT NULL,
+  category_id varchar(15) NOT NULL,
+  incident_id varchar(15) NOT NULL,
   date datetime NOT NULL,
   description varchar(500) NOT NULL,
   PRIMARY KEY(incident_id),

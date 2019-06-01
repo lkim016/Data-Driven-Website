@@ -74,10 +74,10 @@ footer {
 }
 
 /* ADD-RESOURCE */
-.add_resource h1 {
+.add_resource, .add_incident, .resource_report h1 {
     padding-left: 1%;
 }
-.add_resource table {
+table {
     margin-left: auto;
     margin-right: auto;
     width: 95%;
@@ -107,3 +107,5 @@ footer {
     margin-left: 1%;
     width: 10%;
 }
+
+/* RESOURCE REPORT */
