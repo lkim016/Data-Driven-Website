@@ -8,7 +8,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller {
-    public function postRegister(Request $request) {
+    public function __construct (Request $request) 
+    {
+
+    }
+
+    public function postRegister(Request $request) 
+    {
         //Retrieve the username input field
         $username = $request->input('username');
         echo 'Username: '.$username;
@@ -56,20 +62,25 @@ class UserController extends Controller {
         echo "Record updated successfully.<br/>";
         echo '<a href="/view-users">Click Here</a> to go back.';
     }
-    public function validate(Request $request, $id)
+
+    public function val(Request $request)
     {
         $username = $request->input('username');
         $passwd = $request->input('passwd');
-        $email = $request->input('email');
-        $actual_passwd = DB::select('select passwd from users where id = ?',[$id]);
-        
-        if ($passwd = $actual_passwd){
+        $db = mysqli_connect('localhost', 'root', 'Sprite1234!', 'cis197');
+        $query = "select * from users where username='$username' and passwd = '$passwd'";
+        $results = mysqli_query($db, $query);
+        if (mysqli_num_rows($results) == 1) {
+            $_SESSION['username'] = $username;
             return view('main');
         }
         else {
-            echo "Incorrect password attempt. Try again";
+            echo "Wrong username/password combo";
+            echo '<br/><a href="/login">Click Here</a> to go back.';
+            return view('login');
         }
     }
+    
     public function destroy($id)
     {
         DB::delete('delete from users where id = ?',[$id]);

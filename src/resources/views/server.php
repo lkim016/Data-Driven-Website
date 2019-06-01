@@ -8,7 +8,8 @@ $errors = array();
 $_SESSION['success'] = "";
 
 // connect to the database
-$db = mysqli_connect('localhost', 'admin1', '', 'cis197_group1_cert_db'); // LK: need to change database access info.
+// $db = mysqli_connect('localhost', 'debian-sys-maint', '2gQXjTEAtEtWu64F', 'cis197');
+$db = mysqli_connect('localhost', 'root', 'Sprite1234!', 'cis197');
 
 // REGISTER USER
 if (isset($_POST['reg_user'])) {

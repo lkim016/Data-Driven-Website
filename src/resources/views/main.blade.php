@@ -19,7 +19,7 @@
 
     <div class="row">
         <div class="col-sm left">
-            <h2>{{$login_disp_name}}</h2> <!-- pick up here -->
+ 
         </div>
         <div class="col-sm right">
             <h5>[ USERNAME ]</h5>

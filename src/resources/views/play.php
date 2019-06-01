@@ -13,3 +13,14 @@
         }
     }
 ?>
+
+<!doctype html>
+<html>
+<body style="font-family: sans-serif;">
+<p>I am Router Two...</p>
+<form method="post">
+    <p><label for="inp9">Where to go? (1-3)</label>
+    <input type="text" name="where" id="inp9" size="5"></p>
+    <input type="submit"/></form>
+</body>
+</html>

@@ -14,7 +14,7 @@ class LoginController extends Controller
         $html_user = $request->input('username'); // query view and return data
         $html_pass = $request->input('password');
         // gets data from DB
-        $user_info = DB::select('select disp_name, count(username) = 1 AS valid_login from USER where username = ? and password = ? group by disp_name;', array($html_user, $html_pass)); // query db and return value
+        $user_info = DB::select('select * from users where username = ? and password = ?;', array($html_user, $html_pass)); // query db and return value
         
         foreach ($user_info as $db_user) {
             $login_check = $db_user->valid_login;

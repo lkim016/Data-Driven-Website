@@ -22,7 +22,7 @@ Route::get('/main', function () {
 });
 
 // added 5/21
-Route::post('/main', 'LoginController@val_login');
+Route::post('/val', 'UserController@validate');
 
 Route::get('/add-resource', function () {
     return view('add-resource');
@@ -51,6 +51,7 @@ Route::post('user_create', 'UserController@insert');
 
 Route::post('/user/register', array('uses'=>'UserController@postRegister'));
 
+Route::post('user_val', 'UserController@val');
 
 Route::get('edit/{id}', 'UserController@show');
 Route::post('edit/{id}', 'UserController@edit');
@@ -73,4 +74,16 @@ Route::get('register2', function() {
 
 Route::get('login2', function() {
     return view('login2');
+});
+
+
+Route::get('play', function() {
+    return view('play');
+});
+// Route::post('play', function() {
+//     return view
+// });
+
+Route::get('index2', function() {
+    return view('index2');
 });
