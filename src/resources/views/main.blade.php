@@ -19,10 +19,10 @@
 
     <div class="row">
         <div class="col-sm left">
- 
+
         </div>
         <div class="col-sm right">
-            <h5>[ USERNAME ]</h5>
+            <h5><?php echo $_SESSION['username']; ?></h5>
             <h5>[ USER SPECIFIC INFO ]</h5>
         </div>
     </div>

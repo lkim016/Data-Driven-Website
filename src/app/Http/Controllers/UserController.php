@@ -10,23 +10,19 @@ use App\Http\Controllers\Controller;
 class UserController extends Controller {
     public function __construct (Request $request) 
     {
-
     }
 
     public function postRegister(Request $request) 
     {
-        //Retrieve the username input field
         $username = $request->input('username');
         echo 'Username: '.$username;
         echo '<br>';
 
-        //Retrieve the password input field
-        $passwd = $request->passwd;
+        $passwd = $request->input('passwd');
         echo 'Password: '.$passwd;
         echo '<br>';
 
-        //Retrieve the email input field
-        $email = $request->email;
+        $email = $request->input('email');
         echo 'Email: '.$email;
     }
 
