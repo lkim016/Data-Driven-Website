@@ -11,14 +11,20 @@
         </tr>
         <tr>
             <td><label for="prim_func">Primary Function:</label></td>
-            <td><select class="form-control" id="sel4" name="prim_func" required>
-                
+            <td><select class="form-control" id="search_function" name="prim_func" required>
+                <option></option>
+                @foreach( $primary_function as $function )
+                    <option value =  "{{$function->function_id}}" > {{$function->function_id}}. {{$function->description}} </option> <!-- html design -->
+                @endforeach
                 </select></td>
         </tr>
         <tr>
             <td><label for="incident">Incident:</label></td>
-            <td><select class="form-control" id="sel5" name="incident" required>
-                
+            <td><select class="form-control" id="search_incident" name="incident">
+                <option></option>
+                @foreach( $display_incident as $incident)
+                    <option value = "{{$incident->incident_id}}">#{{$incident->incident_id}} {{$incident->description}}</option> <!-- html design -->
+                @endforeach
                 </select>
             </td>
         </tr>
@@ -32,16 +38,26 @@
         <footer>
             <span class="cancel"></span>
             <button type="button" class="btn btn-secondary">Cancel</button>
-            <button type="submit" id="incident-save" class="btn btn-primary save">Save</button>
+            <button type="submit" id="resource-search" class="btn btn-primary save">Search</button>
         </footer>
         </form>
 </div>
+
+<div id = "search-result">
+    <table>
+        <h1>Search Results</h1> <!-- need to have all of this added with ajax -->
+        <thead class = "search-head">
+        <tr>
+                <td><h4>Resource ID</h4></td>
+                <td><h4>Resource Name</h4></td>
+                <td><h4>Owner</h4></td>
+                <td><h4>Cost/Unit</h4></td>
+                <td><h4>Distance</h4></td>
+            </tr>
+        </thead>
+        <tbody class = "search-body">
+        </tbody>
+    </table>
+</div>
+
 @endsection
-
-@foreach( $primary_function as $function )
-                    <option value =  {{$function->function_id}} > {{$function->function_id}}. {{$function->description}} </option> <!-- html design -->
-                @endforeach
-
-                @foreach($category_info as $category) <!-- change to incident dropdown -->
-                    <option value = {{$category->category_id}} > {{$category->type}} </option> <!-- html design -->
-                @endforeach

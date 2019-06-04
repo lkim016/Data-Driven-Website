@@ -38,19 +38,4 @@
         </form>
 </div>
 
-<script type = "text/javascript">
-
-$( function() {
-    $( "#datepicker" ).datepicker();
-    $( "#incident-save" ).on('click', function() {
-        var today = new Date();
-        var date_choice = new Date( $( "#datepicker" ).val() );
-        // date_choice might have to be reformatted to MM-DD-YY
-        var result = ( date_choice.getMonth()+1 ) + '/' + date_choice.getDate() + '/' + date_choice.getFullYear() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-        $( "#datepicker" ).val(result);
-    });
-});
-
-</script>
-
 @endsection

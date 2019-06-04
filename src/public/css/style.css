@@ -1,9 +1,21 @@
+/* GENERAL CSS */
 html,body{
     width: 100%;
     height: 100%;
     margin: 0px;
     padding: 0px;
     overflow-x: hidden; 
+}
+
+h1 {
+    padding-left: 1%;
+    border-bottom: 1px solid black; /* take this out of login h1 */
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
 }
 
 footer {
@@ -74,14 +86,7 @@ footer {
 }
 
 /* ADD-RESOURCE */
-.add_resource, .add_incident, .resource_report h1 {
-    padding-left: 1%;
-}
-table {
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%;
-}
+
 .add_resource td {
     padding-top: 0.5%;
     padding-bottom: 0.5%;
@@ -106,6 +111,13 @@ table {
 .save {
     margin-left: 1%;
     width: 10%;
+}
+
+/* SEARCH RESULTS */
+#search-result {
+    display: none;
+    margin-top: 2.5%;
+    margin-bottom: 10%;
 }
 
 /* RESOURCE REPORT */

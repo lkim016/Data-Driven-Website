@@ -31,20 +31,19 @@ Route::post('/add-resource', 'MainController@resource_save');
 Route::get('/add-incident', 'MainController@incident_load');
 Route::post('/add-incident', 'MainController@incident_save');
 
-Route::get('/search-resource', function () {
-    return view('search-resource');
-});
+Route::get('/search-resource', 'MainController@search_load');
+Route::post('/search-resource', 'MainController@search_disp');
 
 Route::get('/resource-report', 'MainController@show_resource');
+
+
+
+
 
 
 // Route::get('/register', function() {
 //     return view('register');
 // });
-
-
-
-
 
 Route::get('view-users', 'UserController@view');
 

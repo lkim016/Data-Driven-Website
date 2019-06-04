@@ -17,7 +17,8 @@
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ul class="nav navbar-nav">
-            <li class="active"><a class="nav-link" href="/add-resource">Add Available Resource</a></li>
+            <li class="nav-item"><a class="nav-link" href="/main">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/add-resource">Add Available Resource</a></li>
             <li class="nav-item"><a class="nav-link" href="/add-incident">Add Emergency Incident</a></li>
             <li class="nav-item"><a class="nav-link" href="/search-resource">Search Resources</a></li>
             <li class="nav-item"><a class="nav-link" href="/resource-report">Generate Resource Report</a></li>
@@ -45,5 +46,79 @@
     @yield('content')
     </div>
 
+<script type="text/javascript">
+$(document).ready(function() {
+    // +++ NAV +++
+    // add active class to link of page
+    var pathname = window.location.pathname;
+    $('.nav > li > a[href="' + pathname + '"]').parent().addClass('active');
+
+    if (pathname == "/add-incident") {
+
+        // +++ ADD-INCIDENT +++
+        $( "#datepicker" ).datepicker();
+        $( "#incident-save" ).on('click', function() {
+            var today = new Date();
+            var date_choice = new Date( $( "#datepicker" ).val() );
+            // date_choice might have to be reformatted to MM-DD-YY
+            var result = ( date_choice.getMonth()+1 ) + '/' + date_choice.getDate() + '/' + date_choice.getFullYear() + ' ' + today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+            $( "#datepicker" ).val(result);
+        });
+    } else if (pathname == "/search-resource") {
+        // +++ SEARCH-RESOURCE +++
+        $("#resource-search").on('click', function(event) { 
+            event.preventDefault();
+            // -> PROBLEM: NEED TO HAVE PRIMARY FUNCTION REQUIRED
+            // display the search result html
+            $("#search-result").show();
+            // remove the table rows
+            $(".search-body").children().remove();
+            // create the html to display php results
+            load_doc();
+        });
+        // AJAX
+        // -> PROBLEM: NEED TO HAVE PHP & SQL QUERY WORK PROPERLY
+        function load_doc() {
+            $.ajaxSetup({
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                    }
+            })
+
+            var _token = $("input[name='_token']").val();
+
+            $.ajax({
+                method: 'POST',
+                url: '/search-resource',
+                data: {
+                    _token: _token,
+                    'keyword': $("#keyword").val(),
+                    'prim_func': $("#search_function").val(),
+                    'incident': $("#search_incident").val(),
+                    'distance': $("#search_distance").val()
+                },
+                dataType: 'JSON',
+                success: function(data) {
+                    var result = JSON.parse(data);
+                    for (item in result) {
+                        var cost_unit = result[item]['cost'] + "/" + result[item]['unit'];
+                        // input respones data into an array to loop through and create html structure
+                        var html_result = [];
+                        html_result['owner'] = $("<td></td>").text(result[item]['owner']); // 0 owner
+                        html_result['resource_id'] = $("<td></td>").text(result[item]['resource_id']); // 1 resource id
+                        html_result['resource_name'] = $("<td></td>").text(result[item]['resource_name']); // 2 resource name
+                        html_result['cost_unit'] = $("<td></td>").text(cost_unit); // 3 cost + unit
+                        html_result['distance'] = $("<td></td>").text(result[item]['distance']); // 5 distance
+
+                        $(".search-body").append("<tr>", html_result['resource_id'], html_result['resource_name'],
+                        html_result['owner'], html_result['cost_unit'], html_result['distance'], "</tr>");
+
+                    }
+                }
+            })
+        }
+    }
+});
+</script>
 </body>
 </html>

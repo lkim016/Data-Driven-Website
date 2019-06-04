@@ -51,7 +51,7 @@
             <td> Per </td>
             <td> <select name = "unit" required>
                 @foreach( $cost_unit as $units )
-                    <option value = {{$units->unit_id}}> {{$units->unit}} </option>
+                    <option value = "{{$units->unit_id}}"> {{$units->unit}} </option>
                 @endforeach
                 </select></td>
         </tr>
@@ -68,40 +68,43 @@
 </div>
 
 <script type = "text/javascript">
-    // PRIMARY AND SECONDARY FUNCTION LOADING JS
-    secondary_func();
-    $("#sel1").change( function() { secondary_func() } );
+$(document).ready( function() {
+    // +++ ADD-RESOURCE +++
+        // PRIMARY AND SECONDARY FUNCTION LOADING JS
+        secondary_func();
+        $("#sel1").change( function() { secondary_func() } );
 
-    function secondary_func () {
-            // got the functions list from controller
-            var func = JSON.stringify( {!! $js_func !!} );
-            var func_obj = JSON.parse(func);
+        function secondary_func () {
+                // got the functions list from controller
+                var func = JSON.stringify( {!! $js_func !!} );
+                var func_obj = JSON.parse(func);
 
-            // clear out the secondary function option list
-            sel2_opt_len = $("#sel2 option").length;
-            for (i=1; i <= sel2_opt_len + 1; i++) {
-                $("#sel2 option[value=" + i + "]").remove();
-            }
-
-            // loop through and check if $(#sel1).val() = func_obj[i][description]
-            for (item in func_obj) {
-                // need to check what value was selected in the JSON array
-                var id = func_obj[item]['function_id'];
-                var desc = func_obj[item]['description'];
-                // remove the selected primary function option
-                prim_func_opt = $("#sel1").val();
-                if (id == prim_func_opt){
-                    continue;
-                } else {
-                    $("#sel2").append( $('<option></option>').attr("value", id).text(id + '. ' + desc) );
+                // clear out the secondary function option list
+                sel2_opt_len = $("#sel2 option").length;
+                for (i=1; i <= sel2_opt_len + 1; i++) {
+                    $("#sel2 option[value=" + i + "]").remove();
                 }
-            }
-    };
 
-    // MAKING AN ARRAY THAT STORES ALL OF THE CAPABILITIES
-    //$("#add").on("click", function () { // not sure why we chould have an add button here
-    //    console.log( $("#capa").val() );
-    //})
+                // loop through and check if $(#sel1).val() = func_obj[i][description]
+                for (item in func_obj) {
+                    // need to check what value was selected in the JSON array
+                    var id = func_obj[item]['function_id'];
+                    var desc = func_obj[item]['description'];
+                    // remove the selected primary function option
+                    prim_func_opt = $("#sel1").val();
+                    if (id == prim_func_opt){
+                        continue;
+                    } else {
+                        $("#sel2").append( $('<option></option>').attr("value", id).text(id + '. ' + desc) );
+                    }
+                }
+            };
+
+            // MAKING AN ARRAY THAT STORES ALL OF THE CAPABILITIES
+            //$("#add").on("click", function () { // not sure why we chould have an add button here
+            //    console.log( $("#capa").val() );
+            //})
+});
 </script>
 
 @endsection

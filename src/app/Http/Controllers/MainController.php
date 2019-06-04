@@ -83,9 +83,11 @@ class MainController extends Controller
         }
         
         // loop secondary function through htmlspecialchars()
-        $option = $secondary_func;
-        for ($i=0; $i < count($option); $i++) {
-            $option[$i] = htmlspecialchars($option[$i]);
+        $option = [];
+        if (!empty($option)) { // need to check if secondary function has no values selected
+            for ($i=0; $i < count($secondary_func); $i++) {
+                $option[$i] = htmlspecialchars($secondary_func[$i]);
+            }
         }
         
         // put html data into db
@@ -102,11 +104,13 @@ class MainController extends Controller
         }
         
         // html input could have mutliple for secondary_func
-        for ($i=0; $i < count($option); $i++) {
-            DB::insert('insert into secondary_function
-            (resource_id, function_id)
-            VALUES
-            (?, ?);', array($last_res_id, $option[$i]));
+        if (!empty($option)) {
+            for ($i=0; $i < count($option); $i++) {
+                DB::insert('insert into secondary_function
+                (resource_id, function_id)
+                VALUES
+                (?, ?);', array($last_res_id, $option[$i]));
+            }
         }
         // if data has been successfully entered send message
         return redirect()->to('/main');
@@ -153,6 +157,43 @@ class MainController extends Controller
         VALUES(?, ?, ?, ?, ?);', array($username, $category_id, $incident_id, $datetime, $description));
 
         return redirect()->to('/add-incident');
+    }
+
+    // SEARCH RESOURCES
+    public function search_load(Request $request) {
+        // query db to get the primary function and secondary function
+        $primary_function = DB::select('select function_id, description from function');
+
+        $display_incident = DB::select('select incident_id, description from incident');
+
+        return view('/search-resource', compact('primary_function', 'display_incident') );
+    }
+
+    public function search_disp(Request $request) {
+        // get html input
+        $key = htmlspecialchars( $request->input('keyword') );
+        $function_search = htmlspecialchars( $request->input('prim_func') ); // this results in the function id
+        $incident_search = htmlspecialchars( $request->input('incident') );
+        $distance_search = htmlspecialchars( $request->input('distance') );
+        
+        // query the database with the $key
+        $result = DB::table('resource as r')
+        ->join('function as f', 'r.primary_function_id','=','f.function_id')
+        ->join('cost_unit as cu','r.unit_id','=','cu.unit_id')
+        ->join('incident as i','r.username','=','i.username')
+        ->distinct()
+        ->select('r.username as owner', 'r.resource_id as resource_id', 'r.resource_name as resource_name', 'r.cost as cost', 'cu.unit as unit', 'r.distance as distance')
+        ->where('r.resource_name', 'LIKE', '%'.$key.'%')
+        ->orWhere('r.description', 'LIKE', "%".$key."%")
+        ->orWhere('r.capabilities', 'LIKE', "%".$key."%")
+        ->orWhere('f.function_id', 'LIKE', "%".$function_search."%")
+        ->orWhere('i.incident_id', 'LIKE', "%".$incident_search."%") // this shows up because of username
+        ->orWhere('r.distance', 'LIKE', "%".$distance_search."%") // need to figure out how to filter this so that it doesn't do a search
+        ->get();
+
+        $js_result= json_encode($result, JSON_HEX_TAG);
+
+        return response()->json($js_result, 200 );
     }
 
     // GENERATE RESOURCE REPORT
