@@ -113,7 +113,7 @@ class MainController extends Controller
             }
         }
         // if data has been successfully entered send message
-        return redirect()->to('/main');
+        return redirect()->to('/add-resource');
         // else send error message
     }
 
@@ -138,7 +138,11 @@ class MainController extends Controller
         
         $id = '';
         foreach($incident_id as $incident) {
-            $id = $incident->id;
+            if (!empty($incident->id)){
+                $id = $incident->id;
+            } else {
+                $id = 0;
+            }
         }
 
         // separate number from string
@@ -171,27 +175,53 @@ class MainController extends Controller
 
     public function search_disp(Request $request) {
         // get html input
-        $key = htmlspecialchars( $request->input('keyword') );
-        $function_search = htmlspecialchars( $request->input('prim_func') ); // this results in the function id
-        $incident_search = htmlspecialchars( $request->input('incident') );
-        $distance_search = htmlspecialchars( $request->input('distance') );
-        
-        // query the database with the $key
-        $result = DB::table('resource as r')
-        ->join('function as f', 'r.primary_function_id','=','f.function_id')
-        ->join('cost_unit as cu','r.unit_id','=','cu.unit_id')
-        ->join('incident as i','r.username','=','i.username')
-        ->distinct()
-        ->select('r.username as owner', 'r.resource_id as resource_id', 'r.resource_name as resource_name', 'r.cost as cost', 'cu.unit as unit', 'r.distance as distance')
-        ->where('r.resource_name', 'LIKE', '%'.$key.'%')
-        ->orWhere('r.description', 'LIKE', "%".$key."%")
-        ->orWhere('r.capabilities', 'LIKE', "%".$key."%")
-        ->orWhere('f.function_id', 'LIKE', "%".$function_search."%")
-        ->orWhere('i.incident_id', 'LIKE', "%".$incident_search."%") // this shows up because of username
-        ->orWhere('r.distance', 'LIKE', "%".$distance_search."%") // need to figure out how to filter this so that it doesn't do a search
-        ->get();
+        $input = array(
+            'key' => htmlspecialchars( $request->input('keyword') ),
+            'function_search' => htmlspecialchars( $request->input('prim_func') ), // this results in the function id
+            'incident_search' => htmlspecialchars( $request->input('incident') ),
+            'distance_search' => htmlspecialchars( $request->input('distance') )
+        );
 
-        $js_result= json_encode($result, JSON_HEX_TAG);
+        // need to form the where array and then take out the array in the conditionals
+        $where = array(
+            'key' => '%'.$input['key'].'%',
+            'function' => '%'.$input['function_search'].'%',
+            'incident' => '%'.$input['incident_search'].'%',
+            'distance' => '%'.$input['distance_search'].'%'
+        );
+
+        // broken sql clauses
+        $select = "select DISTINCT r.username AS 'owner', r.resource_id AS 'resource_id', r.resource_name AS 'resource_name', r.cost AS 'cost', c.unit AS 'unit', r.distance AS 'distance' FROM resource r";
+        $join_cost_unit = " JOIN cost_unit c ON (r.unit_id = c.unit_id)";
+        $join_incident = " JOIN incident i ON (r.username = i.username)";
+        $key_where = " WHERE (r.resource_name LIKE '".$where['key']."' OR r.description LIKE '".$where['key']."' OR r.capabilities LIKE '".$where['key']."')";
+        $function_where = " and (r.primary_function_id LIKE '".$where['function']."')";
+        $incident_where = " and (i.incident_id LIKE '".$where['incident']."')";
+        $distance_where = " and (r.distance LIKE '".$where['distance']."')";
+        
+        // query the database based off the conditions
+        // PROBLEM: WHAT TO DO IN THE CASE OF DUPLICATE RESULTS AND WHAT TO DO WHEN MORE THAN ONE INPUT IS EMPTY
+        // WOULD BE BETTER TO TAKE THE QUERY OUT BASED OFF OF THE CONDITION = HAVE TO MAKE THE VARIABLES EMPTY
+        if (!( empty($input['key']) && empty($input['function_search']) && empty($input['incident_search']) && empty($input['distance_search']))) {
+            if(empty($input['key'])) {
+                $key_where = '';
+            } else if (empty($input['function_search'])) {
+                $function_where = '';
+            } else if (empty($input['incident_search'])) {
+                $incident_where = '';
+            } else if (empty($input['distance_search'])) {
+                $distance_where = '';
+            }
+            // create complete sql statement based off of the conditions
+            $sql = $select . $join_cost_unit . $join_incident . $key_where . $function_where . $incident_where . $distance_where;
+            $result = DB::select($sql);
+        } else {
+            // NEEDS TO RETURN ALL RESOURCES IN DATABASE
+            $sql = $select . $join_cost_unit;
+            $result = DB::select($sql);
+        }
+        
+        $js_result = json_encode($result, JSON_HEX_TAG);
 
         return response()->json($js_result, 200 );
     }
@@ -214,4 +244,5 @@ class MainController extends Controller
         }
         return view('/resource-report', compact('html_report', 'sum') );
     }
+
 }

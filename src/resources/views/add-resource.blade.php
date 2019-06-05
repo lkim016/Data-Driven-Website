@@ -61,8 +61,8 @@
 
     <footer>
         <span class="cancel"></span>
-        <button type="button" class="btn btn-secondary">Cancel</button>
-        <button type="submit" class="btn btn-primary save">Save</button>
+        <a href="/main"><button type="button" class="btn btn-secondary">Cancel</button></a>
+        <button type="submit" id="incident-save" class="btn btn-primary save">Save</button>
     </footer>
     </form>
 </div>

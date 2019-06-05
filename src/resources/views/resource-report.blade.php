@@ -27,12 +27,12 @@
         </tr>
     </tfoot>
     </table>
-
+    
     <hr>
 
     <footer>
         <span class="cancel"></span>
-        <button type="button" class="btn btn-secondary">Cancel</button>
+        <a href="/main"><button type="button" class="btn btn-secondary">Cancel</button></a>
     </footer>
 </div>
 

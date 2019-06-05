@@ -27,14 +27,14 @@
             <td><input type="text" class="form-control" id="description" placeholder="Enter Description" name="description" required></td>
         </tr>
     </table>
-        
-        <hr>
+    
+    <hr>
 
-        <footer>
-            <span class="cancel"></span>
-            <button type="button" class="btn btn-secondary">Cancel</button>
-            <button type="submit" id="incident-save" class="btn btn-primary save">Save</button>
-        </footer>
+    <footer>
+        <span class="cancel"></span>
+        <a href="/main"><button type="button" class="btn btn-secondary">Cancel</button></a>
+        <button type="submit" id="incident-save" class="btn btn-primary save">Save</button>
+    </footer>
         </form>
 </div>
 

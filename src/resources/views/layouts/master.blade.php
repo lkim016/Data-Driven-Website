@@ -45,7 +45,10 @@
     <div>
     @yield('content')
     </div>
+    
 
+
+<!-- GENERAL JS -->
 <script type="text/javascript">
 $(document).ready(function() {
     // +++ NAV +++
@@ -54,7 +57,6 @@ $(document).ready(function() {
     $('.nav > li > a[href="' + pathname + '"]').parent().addClass('active');
 
     if (pathname == "/add-incident") {
-
         // +++ ADD-INCIDENT +++
         $( "#datepicker" ).datepicker();
         $( "#incident-save" ).on('click', function() {
@@ -77,7 +79,6 @@ $(document).ready(function() {
             load_doc();
         });
         // AJAX
-        // -> PROBLEM: NEED TO HAVE PHP & SQL QUERY WORK PROPERLY
         function load_doc() {
             $.ajaxSetup({
                 headers: {
@@ -120,5 +121,6 @@ $(document).ready(function() {
     }
 });
 </script>
+
 </body>
 </html>

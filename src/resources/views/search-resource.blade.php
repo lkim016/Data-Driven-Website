@@ -33,13 +33,14 @@
             <td> Within <input type="text" class="form-control" id="search_distance" placeholder="Enter Distance" name="distance"> miles of PCC </td>
         </tr>
     </table>
+    
     <hr>
 
-        <footer>
-            <span class="cancel"></span>
-            <button type="button" class="btn btn-secondary">Cancel</button>
-            <button type="submit" id="resource-search" class="btn btn-primary save">Search</button>
-        </footer>
+    <footer>
+        <span class="cancel"></span>
+        <a href="/main"><button type="button" class="btn btn-secondary">Cancel</button></a>
+        <button type="submit" id="resource-search" class="btn btn-primary save">Search</button>
+    </footer>
         </form>
 </div>
 
