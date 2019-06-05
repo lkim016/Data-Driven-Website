@@ -46,39 +46,99 @@
     </div>
 
     <script type = "text/javascript">
-        var store_inp = '';
-        // problem: a space is added / solution: need to catch the special keys 
-        $("#pw1").on( "keydown", function () { // change to "keyup"
-            if (event.which == 8) {
-                store_inp = store_inp.substr(0, store_inp.length - 1)
-            } else {
-                store_inp += String.fromCharCode(event.which);
-            }
-            convert_str( $(this) );
-            console.log( store_inp );
+        var store_user_inp = '';
+        // problem: a space is added / solution: need to catch the special keys
+        // store_user_inp exceptions: backspace on hold, selection: replacing all or up to selection, copy and paste
+        $("#pw1").on('keydown keyup', function(event) {
+            var this_obj = this;
+            input_key_check(this_obj, event, event.type)
         });
 
         $("#login_submit").on("click", function () {
-            $("#pw").val ( store_inp );
+            $("#pw").val ( store_user_inp );
         });
 
-        function convert_str (this_obj) {
-            // store user input to pass to db
-            $(this_obj).val( $(this_obj).val().replace( this_obj.val(), rep(this_obj.val()) ) );
+        function convert_pw (self) {
+            // change this val to the length of store_user_inp
+            $(self).val( rep() );
             
-            function rep(val_obj) {
-                var len = val_obj.length;
+            function rep() { // inner function to return the value of #pw1
+                var len = store_user_inp.length;
                 var result = '';
                 for (i = 0; i < len ; i++) {
                     result += '*';
                 }
                 return result;
             }
+
         };
+
+        function input_key_check(obj, e, t_type) {
+            var extra_keycode = [8, 37, 38, 39, 40, 186, 187, 189, 191, 222]; // special char keycode
+            var key_array = allowed_keycode(extra_keycode);
+            var key = '';
+            var pass_obj = obj; // pw1 object
+            
+            for (i=0; i<key_array.length; i++) {
+                if (e.which === key_array[i]) {
+                    key = e.which;
+                    break;
+                } else if (e.ctrlKey || e.altKey) {
+                    break;
+                }
+            };
+            // checks trigger and assigns proper event
+            if (key !== '') {
+                switch(t_type) {
+                    case 'keydown':
+                        store_input(key);
+                        break;
+                    case 'keyup':
+                        if (key !== 8) {
+                            convert_pw(pass_obj);
+                        }
+                        break;
+                }
+            }
+            // PROBLEM: NEED TO WORK ON WHEN I SELECT AND TYPE
+            console.log(store_user_inp);
+        }
+
+        function store_input(key_code) {
+            // if trig = 'keypress' then only have to do backspace
+            if (key_code === 8) {
+                store_user_inp = store_user_inp.substr(0, store_user_inp.length - 1);
+            } else if(key_code !== 16) {
+                store_user_inp += String.fromCharCode(key_code);
+            }
+        }
+
+        function allowed_keycode(extra_char) {
+            // backspace: 8
+            // shift, caps: 16, 20
+            // arrows: 37-40
+            // special chars: 186, 187, etc...
+            var pass_code = [];
+            var extra = extra_char;
+            var code_len = (90-48) + extra.length;
+            var a_to_num = 48; // keyboard numbers-alpha: 48-90
+            var extra_iter = 0;
+            for (i = 0; i < code_len; i++) {
+                if (a_to_num < 91) { // inputting character key for alpha-num
+                    pass_code[i] = a_to_num;
+                    a_to_num += 1;
+                } else { // adding any other keys that are allowed
+                    pass_code[i] = extra[extra_iter];
+                    extra_iter += 1;
+                }
+            }
+            return pass_code;
+        }
 
     </script>
 
 </body>
 </html>
+
 
 
