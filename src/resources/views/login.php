@@ -91,6 +91,7 @@
             if (key !== '') {
                 switch(t_type) {
                     case 'keydown':
+                        // Would want to convert this on keydown, but I would have to store the value and then check if the keycode matches
                         store_input(key);
                         break;
                     case 'keyup':

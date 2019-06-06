@@ -1,10 +1,25 @@
-/* GENERAL CSS */
-html,body{
+/* GENERAL CSS *//* Navbar container */
+/* BOOTSTRAP CHANGES */
+/* Dropdown Button */
+nav {
+    overflow: visible !important;
+}
+
+.navbar-nav {
+    cursor: pointer;
+}
+
+.row > h2 {
+    z-index: -1;
+}
+
+html, body {
     width: 100%;
     height: 100%;
     margin: 0px;
     padding: 0px;
-    overflow-x: hidden; 
+    overflow-x: hidden;
+    /*background-color: #D3D3D3;*/
 }
 
 h1 {

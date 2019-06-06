@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" href="css/style.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <!-- datepicker -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,22 +24,43 @@
             <li class="nav-item"><a class="nav-link" href="/search-resource">Search Resources</a></li>
             <li class="nav-item"><a class="nav-link" href="/resource-report">Generate Resource Report</a></li>
         </ul>
+        <ul class = "nav navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+            <!-- Dropdown -->
+            <div class="navbar-nav dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    {!! session('login_disp') !!}
+                </a>
+                <div class ="dropdown-menu dropdown-menu-right">
+                    @if ( session('login_email') <> 0 )
+                    <a class = "dropdown-item">{{ session('login_email') }}</a>
+                    @elseif ( session('login_phone') <> 0)
+                    <a class = "dropdown-item">{{ session('login_phone') }}</a>
+                    @elseif ( session('login_add') <> 0)
+                    <a class = "dropdown-item">{{ session('login_add') }}</a>
+                    @endif
+                    <div class="dropdown-divider"></div>
+                    <a href="/login"class="dropdown-item">Logout</a>
+                </div>
+            </div>
+            </li>
+        </ul>
     </nav>
 
-    <div class="row";>
+    <div class="row">
         <div class="col-sm left">
-            <h2>{{ session('user_type') }}</h2> <!-- pick up here -->
-        </div>
-        <div class="col-sm right">
-            <h5>{!! session('login_disp') !!}</h5> <!-- want to have user name and add a drop down under with info and log out -->
-            <!-- user specific info -->
-            @if ( session('login_email') <> 0 )
-                <h5>{{ session('login_email') }}</h5>
-            @elseif ( session('login_phone') <> 0)
-                <h5>{{ session('login_phone') }}</h5>
-            @elseif ( session('login_add') <> 0)
-                <h5>{{ session('login_add') }}</h5>
-            @endif
+                <h2>{{ session('user_type') }}</h2> <!-- pick up here -->
+            </div>
+            <div class="col-sm right">
+                <h5>{!! session('login_disp') !!}</h5> <!-- want to have user name and add a drop down under with info and log out -->
+                <!-- user specific info -->
+                @if ( session('login_email') <> 0 )
+                    <h5>{{ session('login_email') }}</h5>
+                @elseif ( session('login_phone') <> 0)
+                    <h5>{{ session('login_phone') }}</h5>
+                @elseif ( session('login_add') <> 0)
+                    <h5>{{ session('login_add') }}</h5>
+                @endif
         </div>
     </div>
 
@@ -46,15 +68,13 @@
     @yield('content')
     </div>
     
-
-
 <!-- GENERAL JS -->
 <script type="text/javascript">
 $(document).ready(function() {
     // +++ NAV +++
     // add active class to link of page
     var pathname = window.location.pathname;
-    $('.nav > li > a[href="' + pathname + '"]').parent().addClass('active');
+    $('.nav > li > a[href="' + pathname + '"]').parent().addClass('active'); // need to fix this for the dropdown
 
     if (pathname == "/add-incident") {
         // +++ ADD-INCIDENT +++
