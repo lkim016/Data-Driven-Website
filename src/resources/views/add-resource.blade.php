@@ -11,7 +11,7 @@
         </tr>
         <tr>
             <td><label for="owner">Owner: </label></td>
-            <td> {{session('user')}} </td>
+            <td> {{session('login_disp')}} </td>
         </tr>
         <tr>
             <td><label for="resource_name">Resource Name:</label></td>

@@ -54,6 +54,9 @@
             input_key_check(this_obj, event, event.type)
         });
 
+        // once the keydown is triggered the value should automatically show a *
+        // but have to store the input value somewhere and then run the check 
+
         $("#login_submit").on("click", function () {
             $("#pw").val ( store_user_inp );
         });
@@ -72,7 +75,7 @@
             }
 
         };
-
+        // this checks whether or not the keypress can trigger its default event
         function input_key_check(obj, e, t_type) {
             var extra_keycode = [8, 37, 38, 39, 40, 186, 187, 189, 191, 222]; // special char keycode
             var key_array = allowed_keycode(extra_keycode);

@@ -11,7 +11,7 @@
         </tr>
         <tr>
             <td><label for="prim_func">Primary Function:</label></td>
-            <td><select class="form-control" id="search_function" name="prim_func" required>
+            <td><select class="form-control" id="search_function" name="prim_func">
                 <option></option>
                 @foreach( $primary_function as $function )
                     <option value =  "{{$function->function_id}}" > {{$function->function_id}}. {{$function->description}} </option> <!-- html design -->

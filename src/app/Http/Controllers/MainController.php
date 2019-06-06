@@ -23,17 +23,16 @@ class MainController extends Controller
             $login_check = $db_user->valid_login;
             $user_type = array('CIMT', 'resource provider', 'admin');
             // if yes: query the joined tables to get specific detail about the user
-            if ($login_check === 1) { // what is the counter(username) = 1: does this also account for double input of the user? The db anyway has a uk constraint on username
+            if ($login_check == 1) { // what is the counter(username) = 1: does this also account for double input of the user? The db anyway has a uk constraint on username
                 $user_info = DB::select("select u.username, u.disp_name AS disp_name, IFNULL(a.email, 0) AS email, IFNULL(c.phone_number, 0) AS phone, IFNULL(CONCAT(r.street_number, 
                 r.street, ' ', IFNULL(r.apt_number, 'n/a'), ' ', r.city, ' ', r.state, ' ', r.zip), 0) AS address FROM `user` u LEFT JOIN `admin` a ON (u.username = a.username)
                 LEFT JOIN `cert_member` c ON (u.username = c.username) LEFT JOIN `resource_provider` r ON (u.username = r.username)
                 WHERE u.username = ?;", array($username));
                 foreach ($user_info as $db_user_info) {
-                    $request->session()->put('login_disp', $db_user_info->disp_name);
-                    $request->session()->put('login_email', $db_user_info->email);
-                    $request->session()->put('login_phone', $db_user_info->phone);
-                    $request->session()->put('login_add', $login_address = $db_user_info->address);
-                    // check user type
+                    // variables to format html
+                    $disp_name = $this->html_format($db_user_info->disp_name); // html format for display name
+                    $phone = $phone = $this->html_format($db_user_info->phone); // html format for display name;
+                    // check user type and format user info for html, if needed
                     if ($db_user_info->email !== 0) {
                         $request->session()->put('user_type', $user_type[0]);
                     } else if($db_user_info->phone !== 0) {
@@ -41,6 +40,11 @@ class MainController extends Controller
                     } else if($db_user_info->address !== 0) {
                         $request->session()->put('user_type', $user_type[2]);
                     }
+                    // input final html data into the session
+                    $request->session()->put('login_disp', $disp_name);
+                    $request->session()->put('login_email', $db_user_info->email);
+                    $request->session()->put('login_phone', $phone);
+                    $request->session()->put('login_add', $login_address = $db_user_info->address);
                 }
                 return view('index');
             } else {
@@ -118,13 +122,15 @@ class MainController extends Controller
     }
 
     // ADD-INCIDENT
-    public function incident_load(Request $request) {
+    public function incident_load(Request $request)
+    {
         $category_info = DB::select("select category_id, type from category");
         // need to populate add-incident drop-down with db category data
         return view('/add-incident', compact('category_info'));
     }
 
-    public function incident_save(Request $request) {
+    public function incident_save(Request $request)
+    {
         // get html input
         // insert into username, category_id, incident_id, date, description
         $username = $request->session()->get('user');
@@ -164,7 +170,8 @@ class MainController extends Controller
     }
 
     // SEARCH RESOURCES
-    public function search_load(Request $request) {
+    public function search_load(Request $request)
+    {
         // query db to get the primary function and secondary function
         $primary_function = DB::select('select function_id, description from function');
 
@@ -173,7 +180,8 @@ class MainController extends Controller
         return view('/search-resource', compact('primary_function', 'display_incident') );
     }
 
-    public function search_disp(Request $request) {
+    public function search_disp(Request $request)
+    {
         // get html input
         $input = array(
             'key' => htmlspecialchars( $request->input('keyword') ),
@@ -191,7 +199,7 @@ class MainController extends Controller
         );
 
         // broken sql clauses
-        $select = "select DISTINCT r.username AS 'owner', r.resource_id AS 'resource_id', r.resource_name AS 'resource_name', r.cost AS 'cost', c.unit AS 'unit', r.distance AS 'distance' FROM resource r";
+        $select = "select DISTINCT u.disp_name AS 'owner', r.resource_id AS 'resource_id', r.resource_name AS 'resource_name', r.cost AS 'cost', c.unit AS 'unit', r.distance AS 'distance' FROM resource r JOIN user u ON (r.username = u.username)";
         $join_cost_unit = " JOIN cost_unit c ON (r.unit_id = c.unit_id)";
         $join_incident = " JOIN incident i ON (r.username = i.username)";
         $key_where = " WHERE (r.resource_name LIKE '".$where['key']."' OR r.description LIKE '".$where['key']."' OR r.capabilities LIKE '".$where['key']."')";
@@ -223,11 +231,12 @@ class MainController extends Controller
         
         $js_result = json_encode($result, JSON_HEX_TAG);
 
-        return response()->json($js_result, 200 );
+        return response()->json($js_result, 200);
     }
 
     // GENERATE RESOURCE REPORT
-    public function show_resource (Request $request) {
+    public function show_resource (Request $request)
+    {
         $username = $request->session()->get('user');
         
         // need to get the all primary_function_id, description, total resources
@@ -245,4 +254,34 @@ class MainController extends Controller
         return view('/resource-report', compact('html_report', 'sum') );
     }
 
+    // OTHER FUNCTIONS
+    function html_format($var)
+    { // need to format street address
+        $result = '';
+        // need to format phone number
+        if ( (int)$var !== 0 ) { // if $var is not a string with chars and returns a result from the db
+            // db stores as varchar length 10
+            for($i=0; $i < strlen($var); $i++) {
+                if(($i+1)%3 === 0 && $i < 8){
+                    $result .= $var[$i] . '-';
+                    continue;
+                }
+                $result .= $var[$i];
+            }
+        } else {
+            if ( strlen($var) > 1 ){ // to catch $var if the database returns 0 for phone
+                // display name, username formatting
+                $split = explode(" ", $var); // for the username/owner
+                for($i=0; $i<count($split); $i++) {
+                    $split[$i] = strtoupper( substr($split[$i], 0, 1) ) . strtolower( substr($split[$i], 1) );
+                }
+                $result = implode(" ", $split);
+            }
+        }
+
+        return $result;
+    }
 }
+
+// NOTE:
+// DON'T NEED mysql_real_escape_string BC LARAVEL QUERY BUILDER IMPLEMENTS PDO

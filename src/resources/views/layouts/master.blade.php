@@ -88,15 +88,15 @@ $(document).ready(function() {
         });
     } else if (pathname == "/search-resource") {
         // +++ SEARCH-RESOURCE +++
-        $("#resource-search").on('click', function(event) { 
+        $("#resource-search").on('click', function(event) {
             event.preventDefault();
             // -> PROBLEM: NEED TO HAVE PRIMARY FUNCTION REQUIRED
-            // display the search result html
-            $("#search-result").show();
-            // remove the table rows
-            $(".search-body").children().remove();
-            // create the html to display php results
-            load_doc();
+            if ( $("#search_function").val() != 0 ) {
+                // create the html to display php results
+                load_doc();
+            } else {
+                // javascript error message
+            }
         });
         // AJAX
         function load_doc() {
@@ -120,9 +120,13 @@ $(document).ready(function() {
                 },
                 dataType: 'JSON',
                 success: function(data) {
+                    // display the search result html
+                    $("#search-result").show();
+                    // remove the table rows
+                    $(".search-body").children().remove();
                     var result = JSON.parse(data);
                     for (item in result) {
-                        var cost_unit = result[item]['cost'] + "/" + result[item]['unit'];
+                        var cost_unit = "$" + result[item]['cost'] + "/" + result[item]['unit'];
                         // input respones data into an array to loop through and create html structure
                         var html_result = [];
                         html_result['owner'] = $("<td></td>").text(result[item]['owner']); // 0 owner
