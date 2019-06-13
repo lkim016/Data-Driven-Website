@@ -31,15 +31,12 @@
     padding: 0.5% 3.5%;
 }
 
-.main-menu {
-    text-align: center;
-    margin: 0 auto;
-    width: 65%;
+/* ERROR MESSAGE */
+.alert {
+    display: none;
 }
 
-.main-menu li {
-    list-style-type: none;
-}
+/* BODY */
 
 html, body {
     width: 100%;
@@ -66,6 +63,7 @@ footer {
 }
 
 /* LOGIN */
+
 .header {
     text-align: center;
     background: lightgray;
@@ -88,16 +86,24 @@ footer {
 }
 
 /* MAIN */
+
 .main-menu {
     width: 25%;
+    text-align: center;
+    margin: 0 auto;
 }
+
+.main-menu li {
+    list-style-type: none;
+}
+
 .exit {
     padding-left: 90%;
 }
 
 /* ADD-RESOURCE */
 
-.add_resource td {
+.add_resource td { /* design for the 4 columns on add-resource */
     padding-top: 0.5%;
     padding-bottom: 0.5%;
 }

@@ -18,7 +18,7 @@
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ul class="nav navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="/main">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/main">Main</a></li>
             <li class="nav-item"><a class="nav-link" href="/add-resource">Add Available Resource</a></li>
             <li class="nav-item"><a class="nav-link" href="/add-incident">Add Emergency Incident</a></li>
             <li class="nav-item"><a class="nav-link" href="/search-resource">Search Resources</a></li>
@@ -26,10 +26,9 @@
         </ul>
         <ul class = "nav navbar-nav ml-auto">
             <li class="nav-item dropdown">
-            <!-- Dropdown -->
             <div class="navbar-nav dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    {!! session('login_disp') !!}
+                    {{ session('login_disp') }}
                 </a>
                 <div class ="dropdown-menu dropdown-menu-right">
                     @if ( session('login_email') <> 0 )
@@ -75,7 +74,8 @@ $(document).ready(function() {
     // add active class to link of page
     var pathname = window.location.pathname;
     $('.nav > li > a[href="' + pathname + '"]').parent().addClass('active'); // need to fix this for the dropdown
-
+    
+    
     if (pathname == "/add-incident") {
         // +++ ADD-INCIDENT +++
         $( "#datepicker" ).datepicker();
@@ -88,6 +88,11 @@ $(document).ready(function() {
         });
     } else if (pathname == "/search-resource") {
         // +++ SEARCH-RESOURCE +++
+         // store_user_inp exceptions: backspace on hold, selection: replacing all or up to selection, copy and paste
+         $("#keyword").on('keydown', function(event) {
+            input_key_check(event);
+        });
+
         $("#resource-search").on('click', function(event) {
             event.preventDefault();
             // -> PROBLEM: NEED TO HAVE PRIMARY FUNCTION REQUIRED
@@ -141,6 +146,43 @@ $(document).ready(function() {
                     }
                 }
             })
+        }
+
+        // this checks whether or not the keypress can trigger its default event
+        function input_key_check(e) {
+            var extra_keycode = [];
+            var key_array = allowed_keycode(extra_keycode);
+            var key = '';
+            
+            for (i=0; i<key_array.length; i++) {
+                if (e.which !== key_array[i]) {
+                    console.log("this is the e.which: " + e.which);
+                    console.log("this is the array: " + key_array[i]);
+                    console.log("true");
+                }
+            };
+        }
+
+        function allowed_keycode(extra_char) {
+            // backspace: 8
+            // shift, caps: 16, 20
+            // arrows: 37-40
+            // special chars: 186, 187, etc...
+            var pass_code = [];
+            var extra = extra_char;
+            var code_len = (91-48) + extra.length;
+            var a_to_num = 48; // keyboard numbers-alpha: 48-90
+            var extra_iter = 0;
+            for (i = 0; i < code_len; i++) {
+                if (a_to_num < 91) { // inputting character key for alpha-num
+                    pass_code[i] = a_to_num;
+                    a_to_num += 1;
+                } else { // adding any other keys that are allowed
+                    pass_code[i] = extra[extra_iter];
+                    extra_iter += 1;
+                }
+            }
+            return pass_code;
         }
     }
 });

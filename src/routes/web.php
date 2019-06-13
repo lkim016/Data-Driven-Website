@@ -18,7 +18,8 @@ Route::get('/login', function () {
 });
 
 Route::get('/main', function () {
-    return view('index');
+    $login_val = 0;
+    return view('index', compact('login_val'));
 });
 
 Route::post('/main', 'MainController@val_login');
@@ -39,12 +40,11 @@ Route::get('/resource-report', 'MainController@show_resource');
 
 
 
-
-
 // Route::get('/register', function() {
 //     return view('register');
 // });
 
+/*
 Route::get('view-users', 'UserController@view');
 
 Route::get('register', 'UserController@insertform');
@@ -75,3 +75,4 @@ Route::get('register2', function() {
 Route::get('login2', function() {
     return view('login2');
 });
+*/

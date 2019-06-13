@@ -13,6 +13,9 @@
 </head>
 
 <body>
+    <div class="alert alert-success">
+    </div>
+
     <div class = "header">
         <h1 align="center"><b>Welcome to the CERT Incident Management Tool (CIMT)</b></h1><br/>
         <p align="center">The CIMT is an online web application that manages available resources and their
@@ -46,8 +49,16 @@
     </div>
 
     <script type = "text/javascript">
+        // ++ ERROR MESSAGE
+        var login_val = JSON.stringify( {!! $login_val !!} );
+        var login_val = JSON.parse(login_val);
+        if ( login_val === 1) {
+            $(".alert").append("<strong>Incorrect username and password.</strong>");
+            $(".alert").show();
+        }
+
+        // ++ PASSWORD INPUT
         var store_user_inp = '';
-        // problem: a space is added / solution: need to catch the special keys
         // store_user_inp exceptions: backspace on hold, selection: replacing all or up to selection, copy and paste
         $("#pw1").on('keydown keyup', function(event) {
             var this_obj = this;
@@ -105,7 +116,7 @@
                 }
             }
             // PROBLEM: NEED TO WORK ON WHEN I SELECT AND TYPE
-            console.log(store_user_inp);
+            // console.log(store_user_inp);
         }
 
         function store_input(key_code) {
