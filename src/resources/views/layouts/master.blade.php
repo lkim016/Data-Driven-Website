@@ -89,19 +89,20 @@ $(document).ready(function() {
     } else if (pathname == "/search-resource") {
         // +++ SEARCH-RESOURCE +++
          // store_user_inp exceptions: backspace on hold, selection: replacing all or up to selection, copy and paste
-         $("#keyword").on('keydown', function(event) {
+         /*$("#keyword").on('keydown', function(event) {
             input_key_check(event);
         });
+        */
 
         $("#resource-search").on('click', function(event) {
             event.preventDefault();
             // -> PROBLEM: NEED TO HAVE PRIMARY FUNCTION REQUIRED
-            if ( $("#search_function").val() != 0 ) {
+            //if ( $("#search_function").val() != 0 ) {
                 // create the html to display php results
                 load_doc();
-            } else {
+            //} else {
                 // javascript error message
-            }
+            //}
         });
         // AJAX
         function load_doc() {
