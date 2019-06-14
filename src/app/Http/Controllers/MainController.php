@@ -22,7 +22,7 @@ class MainController extends Controller
             $login_val = json_encode($login_val, JSON_HEX_TAG);
             return redirect()->to( '/login', compact('login_val'));
         } else {
-            $login_val = 1;
+            $login_val = 2;
             $login_val = json_encode($login_val, JSON_HEX_TAG);
             foreach ($user_check as $db_user) {
                 // check to see that the client input login is in the database

@@ -50,12 +50,13 @@
 
     <script type = "text/javascript">
         // ++ ERROR MESSAGE
-        //var login_val = JSON.stringify( {!! $login_val !!} );
-        //var login_val = JSON.parse(login_val);
-        //if ( login_val === 1) {
-        //    $(".alert").append("<strong>Incorrect username and password.</strong>");
-        //    $(".alert").show();
-        //}
+        var login_val = JSON.stringify( {!! $login_val !!} );
+        login_val = JSON.parse(login_val);
+        
+        if ( login_val === 1) {
+            $(".alert").append("<strong>Incorrect username and password.</strong>");
+            $(".alert").show();
+        }
 
         // ++ PASSWORD INPUT
         var store_user_inp = '';

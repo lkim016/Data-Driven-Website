@@ -23,7 +23,8 @@
     <!-- JS -->
     <script type="text/javascript">
         var login_val = JSON.stringify( {!! $login_val !!} );
-        var login_val = JSON.parse(login_val);
+        login_val = JSON.parse(login_val);
+        
         if(login_val === 2) {
             $(".alert").append("<strong>You are now logged in.</strong>");
             $(".alert").show();
