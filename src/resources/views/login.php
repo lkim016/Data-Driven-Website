@@ -4,6 +4,7 @@
 <head>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
 <style>
 
@@ -13,6 +14,9 @@
 </head>
 
 <body>
+    <div class="alert alert-success">
+    </div>
+
     <div class = "header">
         <h1 align="center"><b>Welcome to the CERT Incident Management Tool (CIMT)</b></h1><br/>
         <p align="center">The CIMT is an online web application that manages available resources and their
@@ -32,20 +36,125 @@
             </div>
             <div class="form-group">
                 <label for="pw">Password: </label>
-                <input type="text" class="form-control" id="passwd" placeholder="Enter Password" name="passwd" required>
+                <input type="text" class="form-control" id="pw1" placeholder="Enter Password" name="password1" required>
+                <input type="text" hidden id="pw" name="password"/>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" id="login_submit">Submit</button>
             <!--<a href="/main" class="btn btn-primary">Submit</a><br/><br/> -->
             <label>
                 <input type="checkbox" checked="checked" name="remember">Remember me
             </label><br/>
             <p><span class="pw">Forgot <a href="#">password?</a></span></p>
             <p><span class="reg">Click here to <a href="/register">register.</a></span></p>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+
+    <script type = "text/javascript">
+        // ++ ERROR MESSAGE
+        var login_val = JSON.stringify( {!! $login_val !!} );
+        var login_val = JSON.parse(login_val);
+        if ( login_val === 1) {
+            $(".alert").append("<strong>Incorrect username and password.</strong>");
+            $(".alert").show();
+        }
+
+        // ++ PASSWORD INPUT
+        var store_user_inp = '';
+        // store_user_inp exceptions: backspace on hold, selection: replacing all or up to selection, copy and paste
+        $("#pw1").on('keydown keyup', function(event) {
+            var this_obj = this;
+            input_key_check(this_obj, event, event.type)
+        });
+
+        // once the keydown is triggered the value should automatically show a *
+        // but have to store the input value somewhere and then run the check 
+
+        $("#login_submit").on("click", function () {
+            $("#pw").val ( store_user_inp );
+        });
+
+        function convert_pw (self) {
+            // change this val to the length of store_user_inp
+            $(self).val( rep() );
+            
+            function rep() { // inner function to return the value of #pw1
+                var len = store_user_inp.length;
+                var result = '';
+                for (i = 0; i < len ; i++) {
+                    result += '*';
+                }
+                return result;
+            }
+
+        };
+        // this checks whether or not the keypress can trigger its default event
+        function input_key_check(obj, e, t_type) {
+            var extra_keycode = [8, 37, 38, 39, 40, 186, 187, 189, 191, 222]; // special char keycode
+            var key_array = allowed_keycode(extra_keycode);
+            var key = '';
+            var pass_obj = obj; // pw1 object
+            
+            for (i=0; i<key_array.length; i++) {
+                if (e.which === key_array[i]) {
+                    key = e.which;
+                    break;
+                } else if (e.ctrlKey || e.altKey) {
+                    break;
+                }
+            };
+            // checks trigger and assigns proper event
+            if (key !== '') {
+                switch(t_type) {
+                    case 'keydown':
+                        // Would want to convert this on keydown, but I would have to store the value and then check if the keycode matches
+                        store_input(key);
+                        break;
+                    case 'keyup':
+                        if (key !== 8) {
+                            convert_pw(pass_obj);
+                        }
+                        break;
+                }
+            }
+            // PROBLEM: NEED TO WORK ON WHEN I SELECT AND TYPE
+            // console.log(store_user_inp);
+        }
+
+        function store_input(key_code) {
+            // if trig = 'keypress' then only have to do backspace
+            if (key_code === 8) {
+                store_user_inp = store_user_inp.substr(0, store_user_inp.length - 1);
+            } else if(key_code !== 16) {
+                store_user_inp += String.fromCharCode(key_code);
+            }
+        }
+
+        function allowed_keycode(extra_char) {
+            // backspace: 8
+            // shift, caps: 16, 20
+            // arrows: 37-40
+            // special chars: 186, 187, etc...
+            var pass_code = [];
+            var extra = extra_char;
+            var code_len = (90-48) + extra.length;
+            var a_to_num = 48; // keyboard numbers-alpha: 48-90
+            var extra_iter = 0;
+            for (i = 0; i < code_len; i++) {
+                if (a_to_num < 91) { // inputting character key for alpha-num
+                    pass_code[i] = a_to_num;
+                    a_to_num += 1;
+                } else { // adding any other keys that are allowed
+                    pass_code[i] = extra[extra_iter];
+                    extra_iter += 1;
+                }
+            }
+            return pass_code;
+        }
+
+    </script>
 
 </body>
 </html>
+
 
 

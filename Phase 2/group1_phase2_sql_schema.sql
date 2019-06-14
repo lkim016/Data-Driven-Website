@@ -44,7 +44,7 @@ CREATE TABLE `admin` (
 CREATE TABLE cert_member (
   member_id int(15) unsigned NOT NULL AUTO_INCREMENT,
   username varchar(100) NOT NULL,
-  phone_number int(10) NOT NULL,
+  phone_number varchar(10) NOT NULL,
   PRIMARY KEY (member_id),
   UNIQUE KEY (username),
   UNIQUE KEY phone_number (phone_number)
@@ -95,7 +95,7 @@ CREATE TABLE resource (
   resource_name varchar(500) NOT NULL,
   description varchar(500) DEFAULT NULL,
   capabilities varchar(1000) DEFAULT NULL,
-  distance decimal(4,1) DEFAULT NULL,
+  distance decimal(4,1) DEFAULT 0.0,
   cost decimal(5,2) NOT NULL,
   unit_id int(15) unsigned NOT NULL,
   PRIMARY KEY (resource_id),
@@ -107,7 +107,7 @@ CREATE TABLE resource (
 
 
 CREATE TABLE category (
-  category_id int(15) unsigned NOT NULL AUTO_INCREMENT,
+  category_id varchar(15) NOT NULL,
   type varchar(500) NOT NULL,
   PRIMARY KEY (category_id)
 );
@@ -116,8 +116,8 @@ CREATE TABLE category (
 
 CREATE TABLE incident (
   username varchar(100) NOT NULL,
-  category_id int(15) unsigned NOT NULL,
-  incident_id int(15) unsigned NOT NULL,
+  category_id varchar(15) NOT NULL,
+  incident_id varchar(15) NOT NULL,
   date datetime NOT NULL,
   description varchar(500) NOT NULL,
   PRIMARY KEY(incident_id),

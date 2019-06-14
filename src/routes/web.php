@@ -18,32 +18,33 @@ Route::get('/login', function () {
 });
 
 Route::get('/main', function () {
-    return view('main');
+    $login_val = 0;
+    return view('index', compact('login_val'));
 });
+
+Route::post('/main', 'MainController@val_login');
 
 // added 5/21
-Route::post('/val', 'UserController@validate');
 
-Route::get('/add-resource', function () {
-    return view('add-resource');
-});
+Route::get('/add-resource', 'MainController@resource_load');
+Route::post('/add-resource', 'MainController@resource_save');
 
-Route::get('/add-incident', function () {
-    return view('add-incident');
-});
+Route::get('/add-incident', 'MainController@incident_load');
+Route::post('/add-incident', 'MainController@incident_save');
 
-Route::get('/search-resource', function () {
-    return view('search-resource');
-});
+Route::get('/search-resource', 'MainController@search_load');
+Route::post('/search-resource', 'MainController@search_disp');
 
-Route::get('/resource-report', function () {
-    return view('resource-report');
-});
+Route::get('/resource-report', 'MainController@show_resource');
+
+
+
 
 // Route::get('/register', function() {
 //     return view('register');
 // });
 
+/*
 Route::get('view-users', 'UserController@view');
 
 Route::get('register', 'UserController@insertform');
@@ -75,6 +76,7 @@ Route::get('register2', function() {
 Route::get('login2', function() {
     return view('login2');
 });
+<<<<<<< HEAD
 
 
 Route::get('play', function() {
@@ -87,3 +89,6 @@ Route::get('play', function() {
 Route::get('index2', function() {
     return view('index2');
 });
+=======
+*/
+>>>>>>> dev
