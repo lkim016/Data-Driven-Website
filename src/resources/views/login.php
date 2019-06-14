@@ -27,11 +27,11 @@
 
     <div id="id01" class="login">
     <h1>Login</h1>
-        <form method = "post" action = "/user_val">
+        <form method = "post" action = "/main">
             <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
             <div class="form-group">
                 <label for="user">Username:</label>
-                <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username" required>
+                <input type="text" class="form-control" id="user" placeholder="Enter Username" name="username" required>
             </div>
             <div class="form-group">
                 <label for="pw">Password: </label>
