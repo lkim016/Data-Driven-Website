@@ -52,7 +52,6 @@ Route::post('user_create', 'UserController@insert');
 
 Route::post('/user/register', array('uses'=>'UserController@postRegister'));
 
-Route::post('user_val', 'UserController@val');
 
 Route::get('edit/{id}', 'UserController@show');
 Route::post('edit/{id}', 'UserController@edit');
