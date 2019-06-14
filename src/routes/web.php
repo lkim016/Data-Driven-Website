@@ -76,19 +76,4 @@ Route::get('register2', function() {
 Route::get('login2', function() {
     return view('login2');
 });
-<<<<<<< HEAD
-
-
-Route::get('play', function() {
-    return view('play');
-});
-// Route::post('play', function() {
-//     return view
-// });
-
-Route::get('index2', function() {
-    return view('index2');
-});
-=======
 */
->>>>>>> dev
