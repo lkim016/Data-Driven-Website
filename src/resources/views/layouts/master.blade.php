@@ -1,3 +1,8 @@
+<?php if ( empty(Session::get('user')) )  {
+    header( 'Location: /login' ) ;
+    die();
+} else { ?>
+
 <!doctype html>
 <html>
 <head>
@@ -197,3 +202,4 @@ $(document).ready(function() {
 
 </body>
 </html>
+<?php } ?>

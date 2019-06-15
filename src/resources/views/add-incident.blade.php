@@ -20,7 +20,7 @@
         </tr>
         <tr>
             <td><label for="date">Date:<p>(required)</p></label></td> <!-- MM/DD/YY -->
-            <td><input type="text" class="form-control" id="datepicker" placeholder="Enter Date" name="date" required></td>
+            <td><input type="text" class="form-control" id="datepicker" placeholder="mm/dd/yyyy" name="date" required></td>
         </tr>
         <tr>
             <td><label for="description">Description:<p>(required)</p></label></td>
