@@ -30,7 +30,7 @@ class MainController extends Controller
                 // if yes: query the joined tables to get specific detail about the user
                 // what is the counter(username) = 1: does this also account for double input of the user? The db anyway has a uk constraint on username
                 $user_info = DB::select("select u.username, u.disp_name AS disp_name, a.email AS email, c.phone_number AS phone, CONCAT(r.street_number, ' ',
-                r.street, ' ', IFNULL(r.apt_number, ''), ' ', r.city, ', ', r.state, ' ', r.zip) AS address FROM `user` u LEFT JOIN `admin` a ON (u.username = a.username)
+                r.street, ' ', IFNULL(r.apt_number, ''), ' ', r.city, ' ', r.state, ' ', r.zip) AS address FROM `user` u LEFT JOIN `admin` a ON (u.username = a.username)
                 LEFT JOIN `cert_member` c ON (u.username = c.username) LEFT JOIN `resource_provider` r ON (u.username = r.username)
                 WHERE u.username = ?;", array($db_username));
                 foreach ($user_info as $db_user_info) {
@@ -49,7 +49,7 @@ class MainController extends Controller
                     $request->session()->put('display', $disp_name);
                     $request->session()->put('email', $db_user_info->email);
                     $request->session()->put('phone', $phone);
-                    $request->session()->put('add', $login_address = $db_user_info->address);
+                    $request->session()->put('add', $db_user_info->address);
                 }
                 $login_check = json_encode($login_check, JSON_HEX_TAG);
                 return view('/index', compact('login_check', 'db_username'));
@@ -193,13 +193,22 @@ class MainController extends Controller
             'distance_search' => htmlspecialchars( $request->input('distance') )
         );
 
-        // need to form the where array and then take out the array in the conditionals
-        $where = array(
-            'key' => '%'.$input['key'].'%',
-            'function' => '%'.$input['function_search'].'%',
-            //'incident' => '%'.$input['incident_search'].'%',
-            'distance' => $input['distance_search']
-        );
+        if (!empty($input['distance_search'])) {
+            // need to form the where array and then take out the array in the conditionals
+            $where = array(
+                'key' => '%'.$input['key'].'%',
+                'function' => '%'.$input['function_search'].'%',
+                //'incident' => '%'.$input['incident_search'].'%',
+                'distance' => $input['distance_search'] + 1
+            );
+        } else {
+            $where = array(
+                'key' => '%'.$input['key'].'%',
+                'function' => '%'.$input['function_search'].'%',
+                //'incident' => '%'.$input['incident_search'].'%',
+                'distance' => 0
+            );
+        }
 
         // broken sql clauses
         $select = "select DISTINCT u.disp_name AS 'owner', r.resource_id AS 'resource_id', r.resource_name AS 'resource_name', r.cost AS 'cost', c.unit AS 'unit', r.distance AS 'distance' FROM resource r LEFT JOIN user u ON (r.username = u.username)";
@@ -208,7 +217,7 @@ class MainController extends Controller
         $key_where = " WHERE r.resource_name LIKE '".$where['key']."' OR r.description LIKE '".$where['key']."' OR r.capabilities LIKE '".$where['key']."'";
         $function_where = " and r.primary_function_id LIKE '".$where['function']."'";
         //$incident_where = " and (i.incident_id LIKE '".$where['incident']."')";
-        $distance_where = " and (r.distance = '".$where['distance']."')";
+        $distance_where = " and (r.distance < '".$where['distance']."')";
         $order = " order by r.distance;";
         
         // query the database based off the conditions

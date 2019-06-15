@@ -36,11 +36,11 @@
                     {{ Session::get('display') }}
                 </a>
                 <div class ="dropdown-menu dropdown-menu-right">
-                    @if ( Session::get('email') <> 0 )
+                    @if ( !empty(session('email') ))
                     <a class = "dropdown-item">{{ Session::get('email') }}</a>
-                    @elseif ( Session::get('phone') <> 0)
+                    @elseif ( !empty(session('phone') ))
                     <a class = "dropdown-item">{{ Session::get('phone') }}</a>
-                    @elseif ( Session::get('add') <> 0)
+                    @elseif ( !empty(session('add')))
                     <a class = "dropdown-item">{{ Session::get('add') }}</a>
                     @endif
                     <div class="dropdown-divider"></div>
@@ -59,11 +59,11 @@
             <th> <h2>{{ Session::get('type') }}</h2></th> <!-- pick up here -->
             <th> <h5>{{ Session::get('display') }}</h5> <!-- want to have user name and add a drop down under with info and log out -->
                 <!-- user specific info -->
-                @if ( Session::get('email') <> 0 )
+                @if ( !empty(session('email') ))
                     <h5>{{ Session::get('email') }}</h5>
-                @elseif ( session('phone') <> 0)
+                @elseif ( !empty(session('phone') ))
                     <h5>{{ Session::get('phone') }}</h5>
-                @elseif ( session('add') <> 0)
+                @elseif ( !empty(session('add')))
                     <h5>{{ Session::get('add') }}</h5>
                 @endif
             </th>
