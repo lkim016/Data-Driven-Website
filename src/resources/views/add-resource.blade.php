@@ -26,7 +26,7 @@
                 </select></td>
         </tr>
         <tr>
-            <td><label for="sel2">Secondary Functions: (hold shift to select more than one):</label></td>
+            <td><label for="sel2">Secondary Functions: (hold control/shift to select more than one):</label></td>
             <td><select multiple class="form-control" id="sel2" name="sec_func[]">
                 <!-- <option> is added with jquery -->
                 </select></td>
