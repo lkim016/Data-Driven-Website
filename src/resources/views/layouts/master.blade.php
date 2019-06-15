@@ -51,7 +51,7 @@
         </ul>
     </nav>
 
-    <div class="alert alert-success alert-dismissible fade in">
+    <div class="alert alert-success">
     </div>
 
     <table class = "user-info">
@@ -84,6 +84,17 @@ $(document).ready(function() {
     var pathname = window.location.pathname;
     $('.nav > li > a[href="' + pathname + '"]').parent().addClass('active'); // need to fix this for the dropdown
     
+    $(".refresh").hover( function() { $(this).css('cursor', 'pointer'); });
+    $(".refresh").on("click", function() { window.location.reload(); });
+
+    // integers only for distance
+    /*$("input[name='distance']").on('keypress', function(e) {
+        var intRegex = /[0-9 -()+]+$/;
+        if ( $(this).val().match(intRegex) ) {
+        } else {
+            e.preventDefault();
+        }
+    })*/
 
     if (pathname == "/main") {
         <?php if ( empty($login_check) ) { ?>
@@ -94,9 +105,8 @@ $(document).ready(function() {
         <?php } ?>
         
         if (login_val === 1) { // successful login message
-            //<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            $("div.alert").append("<strong>You are now logged in.</strong>");
-            $("div.alert").show();
+            $(".alert").append("<strong>You are now logged in.</strong>");
+            $(".alert").show().delay(2500).slideUp(1500);
         }
     } else if (pathname == "/add-incident") {
         // +++ ADD-INCIDENT +++
@@ -155,7 +165,6 @@ $(document).ready(function() {
 
                     if (result.length > 0) {
                         // display the search result html
-                        $("#search-result").show();
                         for (item in result) {
                             var cost_unit = "$" + result[item]['cost'] + "/" + result[item]['unit'];
                             // input respones data into an array to loop through and create html structure
@@ -168,8 +177,8 @@ $(document).ready(function() {
 
                             $(".search-body").append("<tr>", html_result['resource_id'], html_result['resource_name'],
                             html_result['owner'], html_result['cost_unit'], html_result['distance'], "</tr>");
-
                         }
+                        $("#search-result").show().slideDown(3000);
                     } else {
                         alert("No results found!");
                         $("#search-result").hide();

@@ -5,7 +5,7 @@
         <thead>
             <tr>
                 <th><h1>Add Available Resource</h1></th>
-                <th></th>
+                <th class = "refresh"><h1>&plus;</h1></th>
             </tr>
         </thead>
     </table>

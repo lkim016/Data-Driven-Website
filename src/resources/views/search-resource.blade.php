@@ -5,7 +5,7 @@
         <thead>
             <tr>
                 <th><h1>Search Resource</h1></th>
-                <th></th>
+                <th class = "refresh"><h1>&plus;</h1></th>
             </tr>
         </thead>
     </table>
@@ -48,7 +48,7 @@
     <footer>
         <span class="cancel"></span>
         <a href="/main"><button type="button" class="btn btn-secondary">Cancel</button></a>
-        <button type="submit" id="resource-search" class="btn btn-primary save">Search</button>
+        <a href="#results"><button type="submit" id="resource-search" class="btn btn-primary save">Search</button></a>
     </footer>
         </form>
 </div>
@@ -69,6 +69,7 @@
         <tbody class = "search-body">
         </tbody>
     </table>
+    <a id = "results"></a>
 </div>
 
 @endsection
