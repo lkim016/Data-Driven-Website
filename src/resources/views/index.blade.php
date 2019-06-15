@@ -22,14 +22,14 @@
 
     <!-- JS -->
     <script type="text/javascript">
-        <?php if ( empty($login_val) ) { ?>
+        <?php if ( empty($login_check) ) { ?>
             var login_val = 0;
         <?php } else { ?>
-            var login_val = JSON.stringify( {!! $login_val !!} );
+            var login_val = JSON.stringify( {!! $login_check !!} );
             login_val = JSON.parse(login_val);
         <?php } ?>
-        
-        if(login_val === 2) {
+        console.log(login_val);
+        if (login_val === 1) { // successful login message
             $(".alert").append("<strong>You are now logged in.</strong>");
             $(".alert").show();
         }

@@ -6,12 +6,12 @@
         <form method = "post" action = "/add-resource">
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
         <tr>
-            <td><label for="resource_id">Resource ID:</label></td>
+            <td><label for="resource_id">Resource ID:<p>(assigned on save)</p></label></td>
             <td></td>
         </tr>
         <tr>
             <td><label for="owner">Owner: </label></td>
-            <td> {{session('login_disp')}} </td>
+            <td> {{Session::get('display')}} </td>
         </tr>
         <tr>
             <td><label for="resource_name">Resource Name:</label></td>

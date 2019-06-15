@@ -31,12 +31,12 @@
                     <?php //echo $_SESSION['display']; ?>
                 </a>
                 <div class ="dropdown-menu dropdown-menu-right">
-                    @if ( session('login_email') <> 0 )
-                    <a class = "dropdown-item">{{ session('login_email') }}</a>
-                    @elseif ( session('login_phone') <> 0)
-                    <a class = "dropdown-item">{{ session('login_phone') }}</a>
-                    @elseif ( session('login_add') <> 0)
-                    <a class = "dropdown-item">{{ session('login_add') }}</a>
+                    @if ( Session::get('email') <> 0 )
+                    <a class = "dropdown-item">{{ Session::get('email') }}</a>
+                    @elseif ( Session::get('phone') <> 0)
+                    <a class = "dropdown-item">{{ Session::get('phone') }}</a>
+                    @elseif ( Session::get('add') <> 0)
+                    <a class = "dropdown-item">{{ Session::get('add') }}</a>
                     @endif
                     <div class="dropdown-divider"></div>
                     <a href="/login"class="dropdown-item">Logout</a>
@@ -48,17 +48,17 @@
 
     <div class="row">
         <div class="col-sm left">
-                <h2>{{ session('user_type') }}</h2> <!-- pick up here -->
+                <h2>{{ Session::get('type') }}</h2> <!-- pick up here -->
             </div>
             <div class="col-sm right">
-                <h5>{!! session('login_disp') !!}</h5> <!-- want to have user name and add a drop down under with info and log out -->
+                <h5>{{ Session::get('display') }}</h5> <!-- want to have user name and add a drop down under with info and log out -->
                 <!-- user specific info -->
-                @if ( session('login_email') <> 0 )
-                    <h5>{{ session('login_email') }}</h5>
-                @elseif ( session('login_phone') <> 0)
-                    <h5>{{ session('login_phone') }}</h5>
-                @elseif ( session('login_add') <> 0)
-                    <h5>{{ session('login_add') }}</h5>
+                @if ( Session::get('email') <> 0 )
+                    <h5>{{ Session::get('email') }}</h5>
+                @elseif ( session('phone') <> 0)
+                    <h5>{{ Session::get('phone') }}</h5>
+                @elseif ( session('add') <> 0)
+                    <h5>{{ Session::get('add') }}</h5>
                 @endif
         </div>
     </div>

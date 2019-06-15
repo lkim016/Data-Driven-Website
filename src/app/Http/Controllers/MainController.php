@@ -21,13 +21,11 @@ class MainController extends Controller
             // need to make error message
             return view( '/login' );
         } else {
-            $login_val = 2;
-            $login_val = json_encode($login_val, JSON_HEX_TAG);
             foreach ($user_check as $db_user) {
                 // check to see that the client input login is in the database
                 $username = $db_user->username;
                 $request->session()->put('user', $username);
-                $login_check = $db_user->valid_login;
+                $login_check = $db_user->valid_login; // triggers login successful message
                 $user_type = array('CIMT', 'resource provider', 'admin');
                 // if yes: query the joined tables to get specific detail about the user
                 // what is the counter(username) = 1: does this also account for double input of the user? The db anyway has a uk constraint on username
@@ -53,7 +51,8 @@ class MainController extends Controller
                     $request->session()->put('phone', $phone);
                     $request->session()->put('add', $login_address = $db_user_info->address);
                 }
-                return view('/index');
+                $login_check = json_encode($login_check, JSON_HEX_TAG);
+                return view('/index', compact('login_check'));
             }
         }
     }
