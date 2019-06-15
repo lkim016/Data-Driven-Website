@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="alert alert-success">
+    <div class="alert alert-success alert-dismissible fade in">
     </div>
 
     <div class = "header">
@@ -49,6 +49,7 @@
         var login_val = JSON.stringify("{{ session('user') }}");
         login_val = JSON.parse(login_val);
         if (login_val === 'error') {
+            //"<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>"
             $(".alert").append("<strong>Incorrect username and password.</strong>");
             $(".alert").show();
         }

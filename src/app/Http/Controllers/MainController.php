@@ -26,11 +26,11 @@ class MainController extends Controller
                 $db_username = $db_user->username;
                 $request->session()->put('user', $db_username);
                 $login_check = $db_user->valid_login; // triggers login successful message
-                $user_type = array('CIMT', 'resource provider', 'admin');
+                $user_type = array('CERT', 'Resource Provider', 'Admin');
                 // if yes: query the joined tables to get specific detail about the user
                 // what is the counter(username) = 1: does this also account for double input of the user? The db anyway has a uk constraint on username
-                $user_info = DB::select("select u.username, u.disp_name AS disp_name, IFNULL(a.email, 0) AS email, IFNULL(c.phone_number, 0) AS phone, IFNULL(CONCAT(r.street_number, 
-                r.street, ' ', IFNULL(r.apt_number, 'n/a'), ' ', r.city, ' ', r.state, ' ', r.zip), 0) AS address FROM `user` u LEFT JOIN `admin` a ON (u.username = a.username)
+                $user_info = DB::select("select u.username, u.disp_name AS disp_name, a.email AS email, c.phone_number AS phone, CONCAT(r.street_number, ' ',
+                r.street, ' ', IFNULL(r.apt_number, ''), ' ', r.city, ', ', r.state, ' ', r.zip) AS address FROM `user` u LEFT JOIN `admin` a ON (u.username = a.username)
                 LEFT JOIN `cert_member` c ON (u.username = c.username) LEFT JOIN `resource_provider` r ON (u.username = r.username)
                 WHERE u.username = ?;", array($db_username));
                 foreach ($user_info as $db_user_info) {
@@ -38,11 +38,11 @@ class MainController extends Controller
                     $disp_name = $this->html_format($db_user_info->disp_name); // html format for display name
                     $phone = $phone = $this->html_format($db_user_info->phone); // html format for display name;
                     // check user type and format user info for html, if needed
-                    if ($db_user_info->email !== 0) {
+                    if ( !empty($db_user_info->phone) ) {
                         $request->session()->put('type', $user_type[0]);
-                    } else if($db_user_info->phone !== 0) {
+                    } else if( !empty($db_user_info->address) ) {
                         $request->session()->put('type', $user_type[1]);
-                    } else if($db_user_info->address !== 0) {
+                    } else if( !empty($db_user_info->email) ) {
                         $request->session()->put('type', $user_type[2]);
                     }
                     // input final html data into the session
@@ -197,18 +197,18 @@ class MainController extends Controller
         $where = array(
             'key' => '%'.$input['key'].'%',
             'function' => '%'.$input['function_search'].'%',
-            'incident' => '%'.$input['incident_search'].'%',
-            'distance' => '%'.$input['distance_search'].'%'
+            //'incident' => '%'.$input['incident_search'].'%',
+            'distance' => $input['distance_search']
         );
 
         // broken sql clauses
-        $select = "select DISTINCT u.disp_name AS 'owner', r.resource_id AS 'resource_id', r.resource_name AS 'resource_name', r.cost AS 'cost', c.unit AS 'unit', r.distance AS 'distance' FROM resource r JOIN user u ON (r.username = u.username)";
+        $select = "select DISTINCT u.disp_name AS 'owner', r.resource_id AS 'resource_id', r.resource_name AS 'resource_name', r.cost AS 'cost', c.unit AS 'unit', r.distance AS 'distance' FROM resource r LEFT JOIN user u ON (r.username = u.username)";
+        //$join_incident = " LEFT JOIN incident i ON (u.username = i.username)";
         $join_cost_unit = " JOIN cost_unit c ON (r.unit_id = c.unit_id)";
-        $join_incident = " JOIN incident i ON (r.username = i.username)";
-        $key_where = " WHERE (r.resource_name LIKE '".$where['key']."' OR r.description LIKE '".$where['key']."' OR r.capabilities LIKE '".$where['key']."')";
-        $function_where = " and (r.primary_function_id LIKE '".$where['function']."')";
-        $incident_where = " and (i.incident_id LIKE '".$where['incident']."')";
-        $distance_where = " and (r.distance LIKE '".$where['distance']."')";
+        $key_where = " WHERE r.resource_name LIKE '".$where['key']."' OR r.description LIKE '".$where['key']."' OR r.capabilities LIKE '".$where['key']."'";
+        $function_where = " and r.primary_function_id LIKE '".$where['function']."'";
+        //$incident_where = " and (i.incident_id LIKE '".$where['incident']."')";
+        $distance_where = " and (r.distance = '".$where['distance']."')";
         $order = " order by r.distance;";
         
         // query the database based off the conditions
@@ -219,13 +219,13 @@ class MainController extends Controller
                 $key_where = '';
             } else if (empty($input['function_search'])) {
                 $function_where = '';
-            } else if (empty($input['incident_search'])) {
-                $incident_where = '';
+            //} else if (empty($input['incident_search'])) {
+            //    $incident_where = '';
             } else if (empty($input['distance_search'])) {
                 $distance_where = '';
             }
             // create complete sql statement based off of the conditions
-            $sql = $select . $join_cost_unit . $join_incident . $key_where . $function_where . $incident_where . $distance_where . $order;
+            $sql = $select . $join_cost_unit . $key_where . $function_where . $distance_where . $order;
             $result = DB::select($sql);
         } else {
             // NEEDS TO RETURN ALL RESOURCES IN DATABASE

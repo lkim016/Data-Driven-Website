@@ -2,59 +2,68 @@
 @section('content')
 <div id="id02" class="add_resource">
     <table>
-        <h1>Add Available Resource</h1>
-        <form method = "post" action = "/add-resource">
-        <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
-        <tr>
-            <td><label for="resource_id">Resource ID:<p>(assigned on save)</p></label></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><label for="owner">Owner: </label></td>
-            <td> {{Session::get('display')}} </td>
-        </tr>
-        <tr>
-            <td><label for="resource_name">Resource Name:<p>(required)</p></label></td>
-            <td><input type="text" class="form-control" id="resource_name" placeholder="Enter a Resource Name" name="resource_name" required></td>
-        </tr>
-        <tr>
-            <td><label for="prim_func">Primary Function:</label></td>
-            <td><select class="form-control" id="sel1" name="prim_func" required>
-                @foreach( $primary_function as $function )
-                    <option value =  "{{$function->function_id}}" > {{$function->function_id}}. {{$function->description}} </option> <!-- html design -->
-                @endforeach
-                </select></td>
-        </tr>
-        <tr>
-            <td><label for="sel2">Secondary Functions: (hold control/shift to select more than one):</label></td>
-            <td><select multiple class="form-control" id="sel2" name="sec_func[]">
-                <!-- <option> is added with jquery -->
-                </select></td>
-        </tr>
-        <tr>
-            <td><label for="description">Description:<p>(optional)</p></label></td>
-            <td><input type="text" class="form-control" id="description" placeholder="Enter Description" name="description"></td>
-        </tr>
-        <tr>
-            <td><label for="capa">Capabilities:<p>(optional)</p></label></td>
-            <td id="capa"><ul></ul><input type="text" class="form-control" placeholder="Enter Cabapilities" name="capa"></td>
-            <td><button type="button" class="btn btn-primary" id="add-capa">Add</button></td>
-        </tr>
-        <tr>
-            <td><label for="distance">Distance from PCC:<p>(optional)</p></label></td>
-            <td><input type="text" class="form-control" id="distance" placeholder="Enter Distance" name="distance"></td>
-            <td> Miles</td>
-        </tr>
-        <tr>
-            <td><label for="cost">Cost (USD): </label></td>
-            <td><input type="text" class="form-control" id="cost" placeholder="Enter Cost" name="cost" required></td>
-            <td> Per </td>
-            <td> <select name = "unit" required>
-                @foreach( $cost_unit as $units )
-                    <option value = "{{$units->unit_id}}"> {{$units->unit}} </option>
-                @endforeach
-                </select></td>
-        </tr>
+        <thead>
+            <tr>
+                <th><h1>Add Available Resource</h1></th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+    <table>
+        <tbody>
+            <form method = "post" action = "/add-resource">
+            <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
+            <tr>
+                <td><label for="resource_id">Resource ID:<p>(assigned on save)</p></label></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><label for="owner">Owner: </label></td>
+                <td> {{Session::get('display')}} </td>
+            </tr>
+            <tr>
+                <td><label for="resource_name">Resource Name:<p>(required)</p></label></td>
+                <td><input type="text" class="form-control" id="resource_name" placeholder="Enter a Resource Name" name="resource_name" required></td>
+            </tr>
+            <tr>
+                <td><label for="prim_func">Primary Function:</label></td>
+                <td><select class="form-control" id="sel1" name="prim_func" required>
+                    @foreach( $primary_function as $function )
+                        <option value =  "{{$function->function_id}}" > {{$function->function_id}}. {{$function->description}} </option> <!-- html design -->
+                    @endforeach
+                    </select></td>
+            </tr>
+            <tr>
+                <td><label for="sel2">Secondary Functions: (hold control/shift to select more than one):</label></td>
+                <td><select multiple class="form-control" id="sel2" name="sec_func[]">
+                    <!-- <option> is added with jquery -->
+                    </select></td>
+            </tr>
+            <tr>
+                <td><label for="description">Description:<p>(optional)</p></label></td>
+                <td><input type="text" class="form-control" id="description" placeholder="Enter Description" name="description"></td>
+            </tr>
+            <tr>
+                <td><label for="capa">Capabilities:<p>(optional)</p></label></td>
+                <td id="capa"><ul></ul><input type="text" class="form-control" placeholder="Enter Cabapilities" name="capa"></td>
+                <td><button type="button" class="btn btn-primary" id="add-capa">Add</button></td>
+            </tr>
+            <tr>
+                <td><label for="distance">Distance from PCC:<p>(optional)</p></label></td>
+                <td><input type="text" class="form-control" id="distance" placeholder="Enter Distance" name="distance"></td>
+                <td> Miles</td>
+            </tr>
+            <tr>
+                <td><label for="cost">Cost (USD): </label></td>
+                <td><input type="text" class="form-control" id="cost" placeholder="Enter Cost" name="cost" required></td>
+                <td> Per </td>
+                <td> <select name = "unit" required>
+                    @foreach( $cost_unit as $units )
+                        <option value = "{{$units->unit_id}}"> {{$units->unit}} </option>
+                    @endforeach
+                    </select></td>
+            </tr>
+        </tbody>
     </table>
         
     <hr>

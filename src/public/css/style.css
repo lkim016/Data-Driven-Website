@@ -32,9 +32,9 @@
 }
 
 /* ERROR MESSAGE */
-.alert {
+/*.alert {
     display: none;
-}
+}*/
 
 /* BODY */
 
@@ -47,23 +47,26 @@ html, body {
     /*background-color: #D3D3D3;*/
 }
 
-.user-info td:first-child {
+.user-info th {
+    padding-top: 2%;
+}
+
+.user-info th:first-child {
     text-align: left;
 }
 
-.user-info td:nth-child(2) {
+.user-info th:nth-child(2) {
     text-align: right;
-}
-
-h1 {
-    padding-left: 1%;
-    border-bottom: 1px solid black; /* take this out of login h1 */
 }
 
 table {
     margin-left: auto;
     margin-right: auto;
     width: 95%;
+}
+
+table h1 {
+    border-bottom: 1px solid lightgrey
 }
 
 footer {

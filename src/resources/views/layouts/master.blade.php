@@ -17,7 +17,65 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<!-- GENERAL JS -->
+<title>Main</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="nav navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="/main">Main</a></li>
+            <li class="nav-item"><a class="nav-link" href="/add-resource">Add Available Resource</a></li>
+            <li class="nav-item"><a class="nav-link" href="/add-incident">Add Emergency Incident</a></li>
+            <li class="nav-item"><a class="nav-link" href="/search-resource">Search Resources</a></li>
+            <li class="nav-item"><a class="nav-link" href="/resource-report">Generate Resource Report</a></li>
+        </ul>
+        <ul class = "nav navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+            <div class="navbar-nav dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    {{ Session::get('display') }}
+                </a>
+                <div class ="dropdown-menu dropdown-menu-right">
+                    @if ( Session::get('email') <> 0 )
+                    <a class = "dropdown-item">{{ Session::get('email') }}</a>
+                    @elseif ( Session::get('phone') <> 0)
+                    <a class = "dropdown-item">{{ Session::get('phone') }}</a>
+                    @elseif ( Session::get('add') <> 0)
+                    <a class = "dropdown-item">{{ Session::get('add') }}</a>
+                    @endif
+                    <div class="dropdown-divider"></div>
+                    <a href="/login"class="dropdown-item">Logout</a>
+                </div>
+            </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="alert alert-success alert-dismissible fade in">
+    </div>
+
+    <table class = "user-info">
+        <tr>
+            <th> <h2>{{ Session::get('type') }}</h2></th> <!-- pick up here -->
+            <th> <h5>{{ Session::get('display') }}</h5> <!-- want to have user name and add a drop down under with info and log out -->
+                <!-- user specific info -->
+                @if ( Session::get('email') <> 0 )
+                    <h5>{{ Session::get('email') }}</h5>
+                @elseif ( session('phone') <> 0)
+                    <h5>{{ Session::get('phone') }}</h5>
+                @elseif ( session('add') <> 0)
+                    <h5>{{ Session::get('add') }}</h5>
+                @endif
+            </th>
+        </tr>
+    </table>
+    <hr>
+
+    <div>
+    @yield('content')
+    </div>
+
+    <!-- GENERAL JS -->
 <script type="text/javascript">
 $(document).ready(function() {
     // 6/14: maybe try storing session in a php variable and passing it to js
@@ -26,7 +84,21 @@ $(document).ready(function() {
     var pathname = window.location.pathname;
     $('.nav > li > a[href="' + pathname + '"]').parent().addClass('active'); // need to fix this for the dropdown
     
-    if (pathname == "/add-incident") {
+
+    if (pathname == "/main") {
+        <?php if ( empty($login_check) ) { ?>
+            var login_val = 0;
+        <?php } else { ?>
+            var login_val = JSON.stringify( {!! $login_check !!} );
+            login_val = JSON.parse(login_val);
+        <?php } ?>
+        
+        if (login_val === 1) { // successful login message
+            //<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            $("div.alert").append("<strong>You are now logged in.</strong>");
+            $("div.alert").show();
+        }
+    } else if (pathname == "/add-incident") {
         // +++ ADD-INCIDENT +++
         $( "#datepicker" ).datepicker();
         $( "#incident-save" ).on('click', function() {
@@ -108,60 +180,6 @@ $(document).ready(function() {
     }
 });
 </script>
-
-<title>Main</title>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <ul class="nav navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="/main">Main</a></li>
-            <li class="nav-item"><a class="nav-link" href="/add-resource">Add Available Resource</a></li>
-            <li class="nav-item"><a class="nav-link" href="/add-incident">Add Emergency Incident</a></li>
-            <li class="nav-item"><a class="nav-link" href="/search-resource">Search Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="/resource-report">Generate Resource Report</a></li>
-        </ul>
-        <ul class = "nav navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-            <div class="navbar-nav dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    {{ Session::get('display') }}
-                </a>
-                <div class ="dropdown-menu dropdown-menu-right">
-                    @if ( Session::get('email') <> 0 )
-                    <a class = "dropdown-item">{{ Session::get('email') }}</a>
-                    @elseif ( Session::get('phone') <> 0)
-                    <a class = "dropdown-item">{{ Session::get('phone') }}</a>
-                    @elseif ( Session::get('add') <> 0)
-                    <a class = "dropdown-item">{{ Session::get('add') }}</a>
-                    @endif
-                    <div class="dropdown-divider"></div>
-                    <a href="/login"class="dropdown-item">Logout</a>
-                </div>
-            </div>
-            </li>
-        </ul>
-    </nav>
-
-    <table class = "user-info">
-        <tr>
-            <td> <h2>{{ Session::get('type') }}</h2></td> <!-- pick up here -->
-            <td> <h5>{{ Session::get('display') }}</h5> <!-- want to have user name and add a drop down under with info and log out -->
-                <!-- user specific info -->
-                @if ( Session::get('email') <> 0 )
-                    <h5>{{ Session::get('email') }}</h5>
-                @elseif ( session('phone') <> 0)
-                    <h5>{{ Session::get('phone') }}</h5>
-                @elseif ( session('add') <> 0)
-                    <h5>{{ Session::get('add') }}</h5>
-                @endif
-            </td>
-        </tr>
-    </table>
-
-    <div>
-    @yield('content')
-    </div>
 
 </body>
 </html>
