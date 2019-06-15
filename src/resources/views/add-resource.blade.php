@@ -46,7 +46,7 @@
             <td> Miles</td>
         </tr>
         <tr>
-            <td><label for="cost">Cost:</label><p>(USD)</p></td>
+            <td><label for="cost">Cost (USD): </label></td>
             <td><input type="text" class="form-control" id="cost" placeholder="Enter Cost" name="cost" required></td>
             <td> Per </td>
             <td> <select name = "unit" required>
