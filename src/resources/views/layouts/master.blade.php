@@ -1,3 +1,8 @@
+<?php if ( empty(Session::get('user')) )  {
+    header( 'Location: /login' ) ;
+    die();
+} else { ?>
+
 <!doctype html>
 <html>
 <head>
@@ -28,7 +33,7 @@
             <li class="nav-item dropdown">
             <div class="navbar-nav dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <?php //echo $_SESSION['display']; ?>
+                    {{ Session::get('display') }}
                 </a>
                 <div class ="dropdown-menu dropdown-menu-right">
                     @if ( Session::get('email') <> 0 )
@@ -197,3 +202,4 @@ $(document).ready(function() {
 
 </body>
 </html>
+<?php } ?>

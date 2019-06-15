@@ -28,7 +28,7 @@
             var login_val = JSON.stringify( {!! $login_check !!} );
             login_val = JSON.parse(login_val);
         <?php } ?>
-        console.log(login_val);
+        
         if (login_val === 1) { // successful login message
             $(".alert").append("<strong>You are now logged in.</strong>");
             $(".alert").show();
