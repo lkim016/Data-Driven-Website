@@ -143,12 +143,10 @@ $(document).ready(function() {
         </ul>
     </nav>
 
-    <div class="row">
-        <div class="col-sm left">
-                <h2>{{ Session::get('type') }}</h2> <!-- pick up here -->
-            </div>
-            <div class="col-sm right">
-                <h5>{{ Session::get('display') }}</h5> <!-- want to have user name and add a drop down under with info and log out -->
+    <table class = "user-info">
+        <tr>
+            <td> <h2>{{ Session::get('type') }}</h2></td> <!-- pick up here -->
+            <td> <h5>{{ Session::get('display') }}</h5> <!-- want to have user name and add a drop down under with info and log out -->
                 <!-- user specific info -->
                 @if ( Session::get('email') <> 0 )
                     <h5>{{ Session::get('email') }}</h5>
@@ -157,8 +155,9 @@ $(document).ready(function() {
                 @elseif ( session('add') <> 0)
                     <h5>{{ Session::get('add') }}</h5>
                 @endif
-        </div>
-    </div>
+            </td>
+        </tr>
+    </table>
 
     <div>
     @yield('content')

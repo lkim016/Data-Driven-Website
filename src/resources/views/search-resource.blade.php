@@ -45,6 +45,7 @@
 </div>
 
 <div id = "search-result">
+<hr>
     <table>
         <h1>Search Results</h1> <!-- need to have all of this added with ajax -->
         <thead class = "search-head">

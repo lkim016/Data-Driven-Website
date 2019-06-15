@@ -47,6 +47,14 @@ html, body {
     /*background-color: #D3D3D3;*/
 }
 
+.user-info td:first-child {
+    text-align: left;
+}
+
+.user-info td:nth-child(2) {
+    text-align: right;
+}
+
 h1 {
     padding-left: 1%;
     border-bottom: 1px solid black; /* take this out of login h1 */

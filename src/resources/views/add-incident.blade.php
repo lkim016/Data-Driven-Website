@@ -2,7 +2,11 @@
 @section('content')
 <div id="id03" class="add_incident">
     <table>
-        <h1>Add Emergency Incident</h1>
+        <div class = "row">
+            <div class = "col-sm">
+                <h1>Add Emergency Incident</h1>
+            </div>
+        </div>
         <form method = "post">
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
         <tr>
