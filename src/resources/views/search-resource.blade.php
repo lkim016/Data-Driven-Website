@@ -6,11 +6,11 @@
         <form method = "post" action = "/search-resource">
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
         <tr>
-            <td><label for="keyword">Keyword:</label></td>
+            <td><label for="keyword">Keyword:<p>(optional)</p></label></td>
             <td><input type="text" class="form-control" id="keyword" placeholder="Enter a Keyword" name="keyword"></td>
         </tr>
         <tr>
-            <td><label for="prim_func">Primary Function:</label></td>
+            <td><label for="prim_func">Primary Function:<p>(optional)</p></label></td>
             <td><select class="form-control" id="search_function" name="prim_func">
                 <option></option>
                 @foreach( $primary_function as $function )
@@ -19,7 +19,7 @@
                 </select></td>
         </tr>
         <tr>
-            <td><label for="incident">Incident:</label></td>
+            <td><label for="incident">Incident:<p>(optional)</p></label></td>
             <td><select class="form-control" id="search_incident" name="incident">
                 <option></option>
                 @foreach( $display_incident as $incident)
@@ -29,7 +29,7 @@
             </td>
         </tr>
         <tr>
-            <td><label for="distance">Distance:</label></td>
+            <td><label for="distance">Distance:<p>(optional)</p></label></td>
             <td> Within <input type="text" class="form-control" id="search_distance" placeholder="Enter Distance" name="distance"> miles of PCC </td>
         </tr>
     </table>

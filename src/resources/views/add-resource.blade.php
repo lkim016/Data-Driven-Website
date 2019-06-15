@@ -14,7 +14,7 @@
             <td> {{Session::get('display')}} </td>
         </tr>
         <tr>
-            <td><label for="resource_name">Resource Name:</label></td>
+            <td><label for="resource_name">Resource Name:<p>(required)</p></label></td>
             <td><input type="text" class="form-control" id="resource_name" placeholder="Enter a Resource Name" name="resource_name" required></td>
         </tr>
         <tr>
@@ -26,27 +26,27 @@
                 </select></td>
         </tr>
         <tr>
-            <td><label for="sel2">Secondary Functions: (hold shift to select more than one):</label></td>
+            <td><label for="sel2">Secondary Functions: (hold control/shift to select more than one):</label></td>
             <td><select multiple class="form-control" id="sel2" name="sec_func[]">
                 <!-- <option> is added with jquery -->
                 </select></td>
         </tr>
         <tr>
-            <td><label for="description">Description:</label></td>
+            <td><label for="description">Description:<p>(optional)</p></label></td>
             <td><input type="text" class="form-control" id="description" placeholder="Enter Description" name="description"></td>
         </tr>
         <tr>
-            <td><label for="capa">Capabilities:</label></td>
+            <td><label for="capa">Capabilities:<p>(optional)</p></label></td>
             <td id="capa"><ul></ul><input type="text" class="form-control" placeholder="Enter Cabapilities" name="capa"></td>
             <td><button type="button" class="btn btn-primary" id="add-capa">Add</button></td>
         </tr>
         <tr>
-            <td><label for="distance">Distance from PCC:</label></td>
+            <td><label for="distance">Distance from PCC:<p>(optional)</p></label></td>
             <td><input type="text" class="form-control" id="distance" placeholder="Enter Distance" name="distance"></td>
             <td> Miles</td>
         </tr>
         <tr>
-            <td><label for="cost">Cost:</label></td>
+            <td><label for="cost">Cost:</label><p>(USD)</p></td>
             <td><input type="text" class="form-control" id="cost" placeholder="Enter Cost" name="cost" required></td>
             <td> Per </td>
             <td> <select name = "unit" required>
