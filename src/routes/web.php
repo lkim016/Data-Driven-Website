@@ -11,15 +11,22 @@
 |
 */
 
-Route::redirect('/', 'login');
-
 Route::get('/login', function () {
+    Session::put('user', '');
     return view('login');
 });
 
+Route::redirect('/', 'login');
+
+Route::get('/logged-out', function() {
+    Session::flush();
+    return view('login');
+});
+
+Route::redirect('/logged-out', 'login');
+
 Route::get('/main', function () {
-    $login_val = 0;
-    return view('index', compact('login_val'));
+    return view('index');
 });
 
 Route::post('/main', 'MainController@val_login');

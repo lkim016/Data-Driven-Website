@@ -17,10 +17,9 @@ class MainController extends Controller
         $user_check = DB::select('select username, count(username) = 1 AS valid_login from USER where username = ? and password = ? group by username;', array($html_user, $html_pass)); // query db and return value
         // NEED LOGIC TO VALIDATE USERNAME AND PASS AGAINST DB
         if ( empty($user_check) ) {
+            $request->session()->put('user', 'error');
             // need to make error message
-            $login_val = 1;
-            $login_val = json_encode($login_val, JSON_HEX_TAG);
-            return redirect()->to( '/login', compact('login_val'));
+            return view( '/login' );
         } else {
             $login_val = 2;
             $login_val = json_encode($login_val, JSON_HEX_TAG);
@@ -42,19 +41,19 @@ class MainController extends Controller
                     $phone = $phone = $this->html_format($db_user_info->phone); // html format for display name;
                     // check user type and format user info for html, if needed
                     if ($db_user_info->email !== 0) {
-                        $request->session()->put('user_type', $user_type[0]);
+                        $request->session()->put('type', $user_type[0]);
                     } else if($db_user_info->phone !== 0) {
-                        $request->session()->put('user_type', $user_type[1]);
+                        $request->session()->put('type', $user_type[1]);
                     } else if($db_user_info->address !== 0) {
-                        $request->session()->put('user_type', $user_type[2]);
+                        $request->session()->put('type', $user_type[2]);
                     }
                     // input final html data into the session
-                    $request->session()->put('login_disp', $disp_name);
-                    $request->session()->put('login_email', $db_user_info->email);
-                    $request->session()->put('login_phone', $phone);
-                    $request->session()->put('login_add', $login_address = $db_user_info->address);
+                    $request->session()->put('display', $disp_name);
+                    $request->session()->put('email', $db_user_info->email);
+                    $request->session()->put('phone', $phone);
+                    $request->session()->put('add', $login_address = $db_user_info->address);
                 }
-                return view('/index', compact('login_val'));
+                return view('/index');
             }
         }
     }

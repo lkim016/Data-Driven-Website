@@ -28,7 +28,7 @@
             <li class="nav-item dropdown">
             <div class="navbar-nav dropdown">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    {{ session('login_disp') }}
+                    <?php //echo $_SESSION['display']; ?>
                 </a>
                 <div class ="dropdown-menu dropdown-menu-right">
                     @if ( session('login_email') <> 0 )
@@ -70,11 +70,11 @@
 <!-- GENERAL JS -->
 <script type="text/javascript">
 $(document).ready(function() {
+    // 6/14: maybe try storing session in a php variable and passing it to js
     // +++ NAV +++
     // add active class to link of page
     var pathname = window.location.pathname;
     $('.nav > li > a[href="' + pathname + '"]').parent().addClass('active'); // need to fix this for the dropdown
-    
     
     if (pathname == "/add-incident") {
         // +++ ADD-INCIDENT +++
@@ -96,10 +96,11 @@ $(document).ready(function() {
 
         $("#resource-search").on('click', function(event) {
             event.preventDefault();
+            load_doc();
             // -> PROBLEM: NEED TO HAVE PRIMARY FUNCTION REQUIRED
             //if ( $("#search_function").val() != 0 ) {
                 // create the html to display php results
-                load_doc();
+                // load_doc();
             //} else {
                 // javascript error message
             //}
@@ -126,24 +127,29 @@ $(document).ready(function() {
                 },
                 dataType: 'JSON',
                 success: function(data) {
-                    // display the search result html
-                    $("#search-result").show();
                     // remove the table rows
                     $(".search-body").children().remove();
                     var result = JSON.parse(data);
-                    for (item in result) {
-                        var cost_unit = "$" + result[item]['cost'] + "/" + result[item]['unit'];
-                        // input respones data into an array to loop through and create html structure
-                        var html_result = [];
-                        html_result['owner'] = $("<td></td>").text(result[item]['owner']); // 0 owner
-                        html_result['resource_id'] = $("<td></td>").text(result[item]['resource_id']); // 1 resource id
-                        html_result['resource_name'] = $("<td></td>").text(result[item]['resource_name']); // 2 resource name
-                        html_result['cost_unit'] = $("<td></td>").text(cost_unit); // 3 cost + unit
-                        html_result['distance'] = $("<td></td>").text(result[item]['distance']); // 5 distance
 
-                        $(".search-body").append("<tr>", html_result['resource_id'], html_result['resource_name'],
-                        html_result['owner'], html_result['cost_unit'], html_result['distance'], "</tr>");
+                    if (result.length > 0) {
+                        // display the search result html
+                        $("#search-result").show();
+                        for (item in result) {
+                            var cost_unit = "$" + result[item]['cost'] + "/" + result[item]['unit'];
+                            // input respones data into an array to loop through and create html structure
+                            var html_result = [];
+                            html_result['owner'] = $("<td></td>").text(result[item]['owner']); // 0 owner
+                            html_result['resource_id'] = $("<td></td>").text(result[item]['resource_id']); // 1 resource id
+                            html_result['resource_name'] = $("<td></td>").text(result[item]['resource_name']); // 2 resource name
+                            html_result['cost_unit'] = $("<td></td>").text(cost_unit); // 3 cost + unit
+                            html_result['distance'] = $("<td></td>").text(result[item]['distance']); // 5 distance
 
+                            $(".search-body").append("<tr>", html_result['resource_id'], html_result['resource_name'],
+                            html_result['owner'], html_result['cost_unit'], html_result['distance'], "</tr>");
+
+                        }
+                    } else {
+                        alert("No results found!");
                     }
                 }
             })

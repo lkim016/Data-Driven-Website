@@ -17,13 +17,17 @@
     <hr>
     <footer>
         <span class="exit"></span>
-        <a href="/login"><button type="button" class="btn btn-secondary">Exit</button></a>
+        <a href="/logged-out"><button type="button" class="btn btn-secondary">Exit</button></a>
     </footer>
 
     <!-- JS -->
     <script type="text/javascript">
-        var login_val = JSON.stringify( {!! $login_val !!} );
-        login_val = JSON.parse(login_val);
+        <?php if ( empty($login_val) ) { ?>
+            var login_val = 0;
+        <?php } else { ?>
+            var login_val = JSON.stringify( {!! $login_val !!} );
+            login_val = JSON.parse(login_val);
+        <?php } ?>
         
         if(login_val === 2) {
             $(".alert").append("<strong>You are now logged in.</strong>");

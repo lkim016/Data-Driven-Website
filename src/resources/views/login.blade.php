@@ -5,10 +5,6 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 
-<style>
-
-</style>
-
 <title>Login</title>
 </head>
 
@@ -50,10 +46,9 @@
 
     <script type = "text/javascript">
         // ++ ERROR MESSAGE
-        var login_val = JSON.stringify( {!! $login_val !!} );
+        var login_val = JSON.stringify("{{ session('user') }}");
         login_val = JSON.parse(login_val);
-        
-        if ( login_val === 1) {
+        if (login_val === 'error') {
             $(".alert").append("<strong>Incorrect username and password.</strong>");
             $(".alert").show();
         }
