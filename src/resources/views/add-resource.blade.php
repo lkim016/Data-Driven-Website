@@ -6,7 +6,7 @@
         <form method = "post" action = "/add-resource">
         <input type = "hidden" name = "_token" value = "<?php echo csrf_token() ?>">
         <tr>
-            <td><label for="resource_id">Resource ID:</label></td>
+            <td><label for="resource_id">Resource ID:<p>(assigned on save)</p></label></td>
             <td></td>
         </tr>
         <tr>
@@ -14,7 +14,7 @@
             <td> {{session('login_disp')}} </td>
         </tr>
         <tr>
-            <td><label for="resource_name">Resource Name:</label></td>
+            <td><label for="resource_name">Resource Name:<p>(required)</p></label></td>
             <td><input type="text" class="form-control" id="resource_name" placeholder="Enter a Resource Name" name="resource_name" required></td>
         </tr>
         <tr>
@@ -32,21 +32,21 @@
                 </select></td>
         </tr>
         <tr>
-            <td><label for="description">Description:</label></td>
+            <td><label for="description">Description:<p>(optional)</p></label></td>
             <td><input type="text" class="form-control" id="description" placeholder="Enter Description" name="description"></td>
         </tr>
         <tr>
-            <td><label for="capa">Capabilities:</label></td>
+            <td><label for="capa">Capabilities:<p>(optional)</p></label></td>
             <td id="capa"><ul></ul><input type="text" class="form-control" placeholder="Enter Cabapilities" name="capa"></td>
             <td><button type="button" class="btn btn-primary" id="add-capa">Add</button></td>
         </tr>
         <tr>
-            <td><label for="distance">Distance from PCC:</label></td>
+            <td><label for="distance">Distance from PCC:<p>(optional)</p></label></td>
             <td><input type="text" class="form-control" id="distance" placeholder="Enter Distance" name="distance"></td>
             <td> Miles</td>
         </tr>
         <tr>
-            <td><label for="cost">Cost:</label></td>
+            <td><label for="cost">Cost:</label><p>(USD)</p></td>
             <td><input type="text" class="form-control" id="cost" placeholder="Enter Cost" name="cost" required></td>
             <td> Per </td>
             <td> <select name = "unit" required>
