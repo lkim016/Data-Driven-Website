@@ -15,15 +15,15 @@
             </td>
         </tr>
         <tr>
-            <td><label for="incident_id">Incident ID:</label></td>
+            <td><label for="incident_id">Incident ID:<p>(assigned on save)</p></label></td>
             <td></td>
         </tr>
         <tr>
-            <td><label for="date">Date:</label></td> <!-- MM/DD/YY -->
+            <td><label for="date">Date:<p>(required)</p></label></td> <!-- MM/DD/YY -->
             <td><input type="text" class="form-control" id="datepicker" placeholder="Enter Date" name="date" required></td>
         </tr>
         <tr>
-            <td><label for="description">Description:</label></td>
+            <td><label for="description">Description:<p>(required)</p></label></td>
             <td><input type="text" class="form-control" id="description" placeholder="Enter Description" name="description" required></td>
         </tr>
     </table>
