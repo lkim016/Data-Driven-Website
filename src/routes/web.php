@@ -18,12 +18,10 @@ Route::get('/login', function () {
 
 Route::redirect('/', 'login');
 
-Route::get('/logged-out', function() {
+Route::get('/logged-out', function(Request $request) {
     Session::flush();
-    return view('login');
+    return redirect()->to('/login');
 });
-
-Route::redirect('/logged-out', 'login');
 
 Route::get('/main', function () {
     return view('index');

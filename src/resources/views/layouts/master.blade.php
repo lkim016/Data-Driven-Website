@@ -17,61 +17,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<title>Main</title>
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <ul class="nav navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="/main">Main</a></li>
-            <li class="nav-item"><a class="nav-link" href="/add-resource">Add Available Resource</a></li>
-            <li class="nav-item"><a class="nav-link" href="/add-incident">Add Emergency Incident</a></li>
-            <li class="nav-item"><a class="nav-link" href="/search-resource">Search Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="/resource-report">Generate Resource Report</a></li>
-        </ul>
-        <ul class = "nav navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-            <div class="navbar-nav dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    {{ Session::get('display') }}
-                </a>
-                <div class ="dropdown-menu dropdown-menu-right">
-                    @if ( Session::get('email') <> 0 )
-                    <a class = "dropdown-item">{{ Session::get('email') }}</a>
-                    @elseif ( Session::get('phone') <> 0)
-                    <a class = "dropdown-item">{{ Session::get('phone') }}</a>
-                    @elseif ( Session::get('add') <> 0)
-                    <a class = "dropdown-item">{{ Session::get('add') }}</a>
-                    @endif
-                    <div class="dropdown-divider"></div>
-                    <a href="/login"class="dropdown-item">Logout</a>
-                </div>
-            </div>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="row">
-        <div class="col-sm left">
-                <h2>{{ Session::get('type') }}</h2> <!-- pick up here -->
-            </div>
-            <div class="col-sm right">
-                <h5>{{ Session::get('display') }}</h5> <!-- want to have user name and add a drop down under with info and log out -->
-                <!-- user specific info -->
-                @if ( Session::get('email') <> 0 )
-                    <h5>{{ Session::get('email') }}</h5>
-                @elseif ( session('phone') <> 0)
-                    <h5>{{ Session::get('phone') }}</h5>
-                @elseif ( session('add') <> 0)
-                    <h5>{{ Session::get('add') }}</h5>
-                @endif
-        </div>
-    </div>
-
-    <div>
-    @yield('content')
-    </div>
-    
 <!-- GENERAL JS -->
 <script type="text/javascript">
 $(document).ready(function() {
@@ -155,51 +100,71 @@ $(document).ready(function() {
                         }
                     } else {
                         alert("No results found!");
+                        $("#search-result").hide();
                     }
                 }
             })
-        }
-
-        // this checks whether or not the keypress can trigger its default event
-        function input_key_check(e) {
-            var extra_keycode = [];
-            var key_array = allowed_keycode(extra_keycode);
-            var key = '';
-            
-            for (i=0; i<key_array.length; i++) {
-                if (e.which !== key_array[i]) {
-                    console.log("this is the e.which: " + e.which);
-                    console.log("this is the array: " + key_array[i]);
-                    console.log("true");
-                }
-            };
-        }
-
-        function allowed_keycode(extra_char) {
-            // backspace: 8
-            // shift, caps: 16, 20
-            // arrows: 37-40
-            // special chars: 186, 187, etc...
-            var pass_code = [];
-            var extra = extra_char;
-            var code_len = (91-48) + extra.length;
-            var a_to_num = 48; // keyboard numbers-alpha: 48-90
-            var extra_iter = 0;
-            for (i = 0; i < code_len; i++) {
-                if (a_to_num < 91) { // inputting character key for alpha-num
-                    pass_code[i] = a_to_num;
-                    a_to_num += 1;
-                } else { // adding any other keys that are allowed
-                    pass_code[i] = extra[extra_iter];
-                    extra_iter += 1;
-                }
-            }
-            return pass_code;
         }
     }
 });
 </script>
 
+<title>Main</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="nav navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="/main">Main</a></li>
+            <li class="nav-item"><a class="nav-link" href="/add-resource">Add Available Resource</a></li>
+            <li class="nav-item"><a class="nav-link" href="/add-incident">Add Emergency Incident</a></li>
+            <li class="nav-item"><a class="nav-link" href="/search-resource">Search Resources</a></li>
+            <li class="nav-item"><a class="nav-link" href="/resource-report">Generate Resource Report</a></li>
+        </ul>
+        <ul class = "nav navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+            <div class="navbar-nav dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    {{ Session::get('display') }}
+                </a>
+                <div class ="dropdown-menu dropdown-menu-right">
+                    @if ( Session::get('email') <> 0 )
+                    <a class = "dropdown-item">{{ Session::get('email') }}</a>
+                    @elseif ( Session::get('phone') <> 0)
+                    <a class = "dropdown-item">{{ Session::get('phone') }}</a>
+                    @elseif ( Session::get('add') <> 0)
+                    <a class = "dropdown-item">{{ Session::get('add') }}</a>
+                    @endif
+                    <div class="dropdown-divider"></div>
+                    <a href="/login"class="dropdown-item">Logout</a>
+                </div>
+            </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="row">
+        <div class="col-sm left">
+                <h2>{{ Session::get('type') }}</h2> <!-- pick up here -->
+            </div>
+            <div class="col-sm right">
+                <h5>{{ Session::get('display') }}</h5> <!-- want to have user name and add a drop down under with info and log out -->
+                <!-- user specific info -->
+                @if ( Session::get('email') <> 0 )
+                    <h5>{{ Session::get('email') }}</h5>
+                @elseif ( session('phone') <> 0)
+                    <h5>{{ Session::get('phone') }}</h5>
+                @elseif ( session('add') <> 0)
+                    <h5>{{ Session::get('add') }}</h5>
+                @endif
+        </div>
+    </div>
+
+    <div>
+    @yield('content')
+    </div>
+
 </body>
 </html>
+
 <?php } ?>

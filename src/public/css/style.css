@@ -47,10 +47,6 @@ html, body {
     /*background-color: #D3D3D3;*/
 }
 
-.row {
-    color:red;
-}
-
 h1 {
     padding-left: 1%;
     border-bottom: 1px solid black; /* take this out of login h1 */

@@ -209,7 +209,7 @@ class MainController extends Controller
         $function_where = " and (r.primary_function_id LIKE '".$where['function']."')";
         $incident_where = " and (i.incident_id LIKE '".$where['incident']."')";
         $distance_where = " and (r.distance LIKE '".$where['distance']."')";
-        $query_end = " order by r.distance;";
+        $order = " order by r.distance;";
         
         // query the database based off the conditions
         // PROBLEM: WHAT TO DO IN THE CASE OF DUPLICATE RESULTS AND WHAT TO DO WHEN MORE THAN ONE INPUT IS EMPTY
@@ -225,11 +225,11 @@ class MainController extends Controller
                 $distance_where = '';
             }
             // create complete sql statement based off of the conditions
-            $sql = $select . $join_cost_unit . $join_incident . $key_where . $function_where . $incident_where . $distance_where . $query_end;
+            $sql = $select . $join_cost_unit . $join_incident . $key_where . $function_where . $incident_where . $distance_where . $order;
             $result = DB::select($sql);
         } else {
             // NEEDS TO RETURN ALL RESOURCES IN DATABASE
-            $sql = $select . $join_cost_unit . $end_query;
+            $sql = $select . $join_cost_unit . $order;
             $result = DB::select($sql);
         }
         
